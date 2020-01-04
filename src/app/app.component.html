@@ -1,0 +1,16 @@
+<div class="container" style="position: relative; height: 100%;" >
+
+<div class="chat-body" style=" height: 90%; overflow: scroll;">
+  <div *ngFor="let m of messages | async"><app-message [username]="m.user" [message]="m.value"></app-message></div>
+</div>
+
+<div class="chat-input" style="position:absolute; bottom:10px; width:100%;">
+  <form (ngSubmit)="sendMessage($event)" style="display: flex; flex-direction: row;">
+    <mat-form-field style="width: 80%; ">
+      <input matInput #messageText autocomplete="off">
+    </mat-form-field>
+    <button  mat-raised-button style="width: 15%;">send</ button>
+  </form>
+</div>
+
+</div>
