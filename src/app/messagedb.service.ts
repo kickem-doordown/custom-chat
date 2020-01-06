@@ -26,14 +26,17 @@ export class MessagedbService {
   likeMessage(doc: string, user: string){
     if(this.canLike){
       this.canLike = false;
+      let arr = [];
       this.db.collection('messages').doc(doc).collection('likesUsers').doc(user).get().pipe(take(1)).subscribe(docCheck => {
-        if(docCheck.exists === false) {
+        if(!docCheck.exists) {
           console.log("liked message: " + doc);
-          this.db.collection('messages').doc(doc).collection('likesUsers').doc(user).set({"LIKE": true});
-          this.db.collection('messages').doc(doc).update({"likesNum" : firebase.firestore.FieldValue.increment(1)}).then(()=>this.canLike = true);
+          arr.push(this.db.collection('messages').doc(doc).collection('likesUsers').doc(user).set({"LIKE": true}));
+          arr.push(this.db.collection('messages').doc(doc).update({"likesNum" : firebase.firestore.FieldValue.increment(1)}));
+          Promise.all(arr).then(()=>this.canLike = true);
         } else {
-          this.db.collection('messages').doc(doc).collection('likesUsers').doc(user).delete();
-          this.db.collection('messages').doc(doc).update({"likesNum" : firebase.firestore.FieldValue.increment(-1)}).then(()=>this.canLike = true);
+          arr.push(this.db.collection('messages').doc(doc).collection('likesUsers').doc(user).delete());
+          arr.push(this.db.collection('messages').doc(doc).update({"likesNum" : firebase.firestore.FieldValue.increment(-1)}));
+          Promise.all(arr).then(()=>this.canLike = true);
         }
       });
     }
