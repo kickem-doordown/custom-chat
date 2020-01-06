@@ -18,7 +18,6 @@ export class AppComponent {
 
   sendMessage(event){
 
-   //Date.now()
     this.mesService.sendMessage({user: "jmk", value: this.messageText.nativeElement.value, timestamp: Date.now()});
     this.messageText.nativeElement.value = "";
 
