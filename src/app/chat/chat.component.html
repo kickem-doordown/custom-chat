@@ -1,6 +1,6 @@
 <div class="container" style="position: relative; height: 100%;" >
 
-    <div class="chat-body" style=" height: 90%; overflow: scroll;">
+    <div class="chat-body" #chat style=" height: 90%; overflow: scroll;">
       <div *ngFor="let m of messages | async"><app-message (liked)="onMessageLike($event)" [username]="m.user" [message]="m.value" [mesDoc]="m.docid" [likesNum]="m.likesNum"></app-message></div>
     </div>
     

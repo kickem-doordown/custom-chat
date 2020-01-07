@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -10,10 +10,13 @@ import { Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent {
+export class ChatComponent implements AfterViewChecked{
+  
   email: string;
-
-  @ViewChild('messageText', {static: false}) messageText: ElementRef;
+  @ViewChild('messageText', {static: false}) 
+  messageText: ElementRef;
+  @ViewChild('chat', {static: false}) 
+  chatContainer: ElementRef;
   messages: Observable<any[]>;
 
   constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router) {
@@ -25,6 +28,9 @@ export class ChatComponent {
       this.email = this.auth.auth.currentUser.email;
     }
   }
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+  } 
 
   sendMessage(event){
 
@@ -37,5 +43,11 @@ export class ChatComponent {
   onMessageLike(docNum){
     this.mesService.likeMessage(docNum, this.email);
   }
+
+  scrollToBottom() {
+    try {
+        this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
+}
 
 }
