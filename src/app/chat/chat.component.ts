@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
+  email: string;
 
   @ViewChild('messageText', {static: false}) messageText: ElementRef;
   messages: Observable<any[]>;
@@ -20,15 +21,21 @@ export class ChatComponent {
 
     if(this.auth.auth.currentUser === null){
       this.router.navigate(['/loginpage']);
+    } else {
+      this.email = this.auth.auth.currentUser.email;
     }
   }
 
   sendMessage(event){
 
-    this.mesService.sendMessage({user: "jmk", value: this.messageText.nativeElement.value, timestamp: Date.now()});
+    this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value, timestamp: Date.now()});
     this.messageText.nativeElement.value = "";
 
     event.stopPropagation();
+  }
+
+  onMessageLike(docNum){
+    this.mesService.likeMessage(docNum, this.email);
   }
 
 }

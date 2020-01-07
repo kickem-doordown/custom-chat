@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MessagedbService } from '../messagedb.service';
 
 @Component({
@@ -15,13 +15,14 @@ export class MessageComponent implements OnInit {
   mesDoc;
   @Input()
   likesNum;
+  @Output() liked: EventEmitter<any> = new EventEmitter();
   
   constructor(public mesService: MessagedbService) { }
 
   ngOnInit() {}
 
   likeMes(){
-    this.mesService.likeMessage(this.mesDoc, this.username);
+    this.liked.emit(this.mesDoc);
   }
 
 }
