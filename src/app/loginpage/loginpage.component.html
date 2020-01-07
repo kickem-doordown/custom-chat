@@ -1,0 +1,16 @@
+<form (ngSubmit)="login($event)">
+    <div style=" margin: auto; width: 80%; " >
+        <mat-form-field style="width: 100%">
+        email <input matInput #email autocomplete="off">
+      </mat-form-field>
+    </div>
+    <div style=" margin: auto; width: 80%; " >
+      <mat-form-field style="width: 100%; ">
+        password <input type="password" matInput #password autocomplete="off">
+      </mat-form-field>
+    </div>
+    <br>
+    <div style=" margin: auto; width: 80%; " >
+        <button  mat-raised-button >LOG ONLINE  </button>
+    </div>  
+</form>

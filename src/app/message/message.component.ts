@@ -18,12 +18,7 @@ export class MessageComponent implements OnInit {
   
   constructor(public mesService: MessagedbService) { }
 
-  ngOnInit() {
-  }
-
-  getLikes(){
-      //return this.mesService.getLikes(this.mesDoc);
-  }
+  ngOnInit() {}
 
   likeMes(){
     this.mesService.likeMessage(this.mesDoc, this.username);

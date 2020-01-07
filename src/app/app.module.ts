@@ -12,12 +12,16 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MessageComponent } from './message/message.component';
+import { LoginpageComponent } from './loginpage/loginpage.component';
+import { ChatComponent } from './chat/chat.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MessageComponent
+    MessageComponent,
+    LoginpageComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
