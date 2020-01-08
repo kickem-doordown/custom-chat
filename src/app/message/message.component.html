@@ -1,6 +1,14 @@
-<div style=" margin: 14px; background-color: beige;">
-    {{username}}:
-    <br>
-    {{message}}
-    <div style="width: 20px; height: 20px; background-color: red; float: right;" (click)="likeMes()"> {{likesNum }} </div>
+<div style="display: flex; margin: 14px; background-color:honeydew;">
+    <div style=" flex: 1; margin: 6px;">
+        <span style="font-weight: bold;"> {{username}}: </span>
+        <br>
+        {{message}}
+        <br>
+        <span style="font-size:12px">{{timestamp | date:'medium'}}</span>
+    </div>
+    <div style=" flex-basis: 20px; display: flex;align-items: center; justify-content: center;">
+        <div style="text-align: center; font-weight: bold; width: 20px; height: 20px; background-color:hotpink;" (click)="likeMes()"> 
+            {{likesNum }} 
+        </div>
+    </div>
 </div>

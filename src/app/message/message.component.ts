@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { MessagedbService } from '../messagedb.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-message',
@@ -7,6 +8,10 @@ import { MessagedbService } from '../messagedb.service';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit {
+
+  @Input()
+  MessageData: any[];
+
   @Input()
   username;
   @Input()
@@ -15,6 +20,8 @@ export class MessageComponent implements OnInit {
   mesDoc;
   @Input()
   likesNum;
+  @Input()
+  timestamp;
   @Output() liked: EventEmitter<any> = new EventEmitter();
   
   constructor(public mesService: MessagedbService) { }
