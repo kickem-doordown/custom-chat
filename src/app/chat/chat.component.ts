@@ -34,9 +34,10 @@ export class ChatComponent implements AfterViewChecked{
 
   sendMessage(event){
 
-    this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value, timestamp: Date.now()});
-    this.messageText.nativeElement.value = "";
-
+    if(this.messageText.nativeElement.value && this.messageText.nativeElement.value !== ''){
+      this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value, timestamp: Date.now()});
+      this.messageText.nativeElement.value = "";
+    }
     event.stopPropagation();
   }
 
