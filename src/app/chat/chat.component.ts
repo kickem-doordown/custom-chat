@@ -1,5 +1,5 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, ViewChild, ElementRef, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements AfterViewChecked{
+export class ChatComponent implements OnDestroy, AfterViewChecked{
   
   email: string;
   @ViewChild('messageText', {static: false}) 
@@ -18,19 +18,32 @@ export class ChatComponent implements AfterViewChecked{
   @ViewChild('chat', {static: false}) 
   chatContainer: ElementRef;
   messages: Observable<any[]>;
+  mesSub: Subscription;
+  lastdocid: string;
 
   constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router) {
-    this.messages = mesService.getObservable();
-
     if(this.auth.auth.currentUser === null){
       this.router.navigate(['/loginpage']);
     } else {
       this.email = this.auth.auth.currentUser.email;
+      this.messages = mesService.getObservable();
+
+      this.mesSub = this.messages.subscribe(data => {
+        if(this.lastdocid && data[0].docid !== this.lastdocid ){
+          console.log("new message: " + data[0].docid);
+        }
+
+        this.lastdocid = data[0].docid;
+      });
     }
   }
   ngAfterViewChecked() {        
     this.scrollToBottom();        
   } 
+  ngOnDestroy(): void {
+    if(this.mesSub)
+      this.mesSub.unsubscribe();
+  }
 
   sendMessage(event){
 
