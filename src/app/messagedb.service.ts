@@ -15,7 +15,7 @@ export class MessagedbService {
   }
 
   getObservable(){
-    return this.db.collection('messages', ref => ref.orderBy("timestamp", "asc")).valueChanges({idField: 'docid'});
+    return this.db.collection('messages', ref => ref.orderBy("timestamp", "desc").limit(50)).valueChanges({idField: 'docid'});
   }
 
   sendMessage(mes: Object){
