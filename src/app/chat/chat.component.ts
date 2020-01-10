@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnDestroy, AfterViewChecked{
+export class ChatComponent implements OnDestroy{
   
   email: string;
   @ViewChild('messageText', {static: false}) 
@@ -31,15 +31,14 @@ export class ChatComponent implements OnDestroy, AfterViewChecked{
       this.mesSub = this.messages.subscribe(data => {
         if(this.lastdocid && data[0].docid !== this.lastdocid ){
           console.log("new message: " + data[0].docid);
+          this.scrollToBottom();
         }
 
         this.lastdocid = data[0].docid;
       });
     }
   }
-  ngAfterViewChecked() {        
-    this.scrollToBottom();        
-  } 
+
   ngOnDestroy(): void {
     if(this.mesSub)
       this.mesSub.unsubscribe();
