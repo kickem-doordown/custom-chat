@@ -1,0 +1,33 @@
+.container{
+    display: flex; 
+    margin: 14px; 
+    background-color:honeydew;
+}
+
+.message{
+    flex: 1; 
+    margin: 6px;
+}
+
+.name{
+    font-weight: bold;
+}
+
+.timestamp{
+    font-size:12px;
+}
+
+.like-container{
+    flex-basis: 20px; 
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+}
+
+.like-container div{
+    text-align: center; 
+    font-weight: bold; 
+    width: 20px; 
+    height: 20px; 
+    background-color:hotpink;
+}

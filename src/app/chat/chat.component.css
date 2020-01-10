@@ -1,0 +1,26 @@
+.container {
+    display: flex; 
+    flex-direction:column; 
+    height: 100vh; 
+    overflow: hidden;
+}
+
+.chat-body{
+    flex : 1 1 100vh; 
+    display: flex; 
+    flex-direction:column-reverse; 
+    overflow: scroll; 
+}
+
+.chat-input{
+    flex: 0 0 100px; 
+    width:100%; 
+}
+
+.chat-form mat-form-field{
+    width: 80%;
+}
+
+.chat-form button{
+    width: 15%;
+}

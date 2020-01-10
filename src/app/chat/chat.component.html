@@ -1,16 +1,16 @@
-<div class="container" style="position: relative; height: 100%;" >
+<div class="container">
 
-    <div class="chat-body" #chat style="display: flex; flex-direction:column-reverse; height: 90%; overflow: scroll;">
-      <div  *ngFor="let m of messages | async"><app-message (liked)="onMessageLike($event)" [timestamp]="m.timestamp" [username]="m.user" [message]="m.value" [mesDoc]="m.docid" [likesNum]="m.likesNum"></app-message></div>
+    <div class="chat-body" #chat>
+        <div  *ngFor="let m of messages | async"><app-message (liked)="onMessageLike($event)" [timestamp]="m.timestamp" [username]="m.user" [message]="m.value" [mesDoc]="m.docid" [likesNum]="m.likesNum"></app-message></div>
     </div>
-    
-    <div class="chat-input" style="position:absolute; bottom:10px; width:100%;">
-      <form (ngSubmit)="sendMessage($event)" style="display: flex; flex-direction: row;">
-        <mat-form-field style="width: 80%; ">
-          <input matInput #messageText autocomplete="off">
-        </mat-form-field>
-        <button  mat-raised-button style="width: 15%;">send  </button>
-      </form>
+
+    <div class="chat-input">
+        <form class="chat-form" (ngSubmit)="sendMessage($event)">
+            <mat-form-field>
+                <input matInput #messageText autocomplete="off">
+            </mat-form-field>
+            <button  mat-raised-button>send  </button>
+        </form>
     </div>
-    
+
 </div>
