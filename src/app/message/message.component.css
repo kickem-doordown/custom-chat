@@ -1,6 +1,6 @@
 .container{
     display: flex; 
-    margin: 14px; 
+    margin: 14px 14px 0px 14px; 
     background-color:honeydew;
 }
 
@@ -35,4 +35,11 @@
 .like-container a{
     color: black;
     text-decoration: none;
+}
+
+.like-list{
+    font-size:12px;
+    margin: 0px 20px 0px 20px;
+    color:hotpink;
+    text-align: right;
 }
