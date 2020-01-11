@@ -19,7 +19,7 @@ export class MessageComponent implements OnInit {
   ngOnInit() {}
 
   likeMes(){
-    this.liked.emit(this.messageObj['docid']);
+    this.liked.emit(this.messageObj);
   }
 
 }

@@ -64,8 +64,8 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
     event.stopPropagation();
   }
 
-  onMessageLike(docNum){
-    this.mesService.likeMessage(docNum, this.email);
+  onMessageLike(messageObj){
+    this.mesService.likeMessage(messageObj, this.email);
   }
 
   scrollToBottom() {
