@@ -10,18 +10,8 @@ import { DatePipe } from '@angular/common';
 export class MessageComponent implements OnInit {
 
   @Input()
-  MessageData: any[];
+  messageObj: any[];
 
-  @Input()
-  username;
-  @Input()
-  message;
-  @Input()
-  mesDoc;
-  @Input()
-  likesNum;
-  @Input()
-  timestamp;
   @Output() liked: EventEmitter<any> = new EventEmitter();
   
   constructor(public mesService: MessagedbService) { }
@@ -29,7 +19,7 @@ export class MessageComponent implements OnInit {
   ngOnInit() {}
 
   likeMes(){
-    this.liked.emit(this.mesDoc);
+    this.liked.emit(this.messageObj['docid']);
   }
 
 }

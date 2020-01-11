@@ -1,14 +1,14 @@
 <div class="container">
     <div class="message">
-        <span class ="name"> {{username}}: </span>
+        <span class ="name"> {{messageObj.user}}: </span>
         <br>
-        {{message}}
+        {{messageObj.value}}
         <br>
-        <span class="timestamp">{{timestamp | date:'medium'}}</span>
+        <span class="timestamp">{{messageObj.timestamp | date:'medium'}}</span>
     </div>
     <div class="like-container">
         <div (click)="likeMes()"> 
-           <a href="#">{{likesNum }} </a> 
+           <a href="#">{{messageObj.likesNum }} </a> 
         </div> 
     </div> 
 </div>

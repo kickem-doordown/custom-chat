@@ -1,7 +1,7 @@
 <div class="container" #container >
 
     <div class="chat-body" #chat>
-        <div  *ngFor="let m of messages | async"><app-message (liked)="onMessageLike($event)" [timestamp]="m.timestamp" [username]="m.user" [message]="m.value" [mesDoc]="m.docid" [likesNum]="m.likesNum"></app-message></div>
+        <div  *ngFor="let m of messages | async"><app-message (liked)="onMessageLike($event)" [messageObj]="m"></app-message></div>
     </div>
 
     <div class="chat-input">
