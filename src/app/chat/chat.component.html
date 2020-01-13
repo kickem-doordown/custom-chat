@@ -3,7 +3,7 @@
         <img src="assets/uc.gif" >
     </div>
     <div class="chat-body" #chat>
-        <div  *ngFor="let m of messages | async"><app-message (liked)="onMessageLike($event)" [messageObj]="m"></app-message></div>
+        <div  *ngFor="let m of mesArr"><app-message (liked)="onMessageLike($event)" [messageObj]="m"></app-message></div>
     </div>
 
     <div class="chat-input">

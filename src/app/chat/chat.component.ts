@@ -21,6 +21,7 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
 
   email: string;
   messages: Observable<any[]>;
+  mesArr: any[];
   mesSub: Subscription;
   lastdocid: string;
 
@@ -34,11 +35,12 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
       this.messages = mesService.getObservable();
 
       this.mesSub = this.messages.subscribe(data => {
+        this.mesArr = data;
+        
         if(this.lastdocid && data[0].docid !== this.lastdocid ){
           console.log("new message: " + data[0].docid);
           this.scrollToBottom();
         }
-
         this.lastdocid = data[0].docid;
       });
     }
