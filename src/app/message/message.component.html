@@ -1,20 +1,30 @@
-<div class="container">
-    <div class="message">
-        <span class ="name"> {{messageObj.user}}: </span>
-        <br>
-        {{messageObj.value}}
-        <br>
-        <span class="timestamp">{{messageObj.timestamp | date:'medium'}}</span>
-    </div>
-    <div class="like-container">
-        <div (click)="likeMes()"> 
-           <a href="#">{{messageObj.likeArr.length }} </a> 
+<div *ngIf="messageData else loading">
+    <div class="container" >
+        <div class="message">
+            <span class ="name"> {{messageData.user}}: </span>
+            <br>
+            {{messageData.value}}
+            <br>
+            <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>
+        </div>
+        <div class="like-container">
+            <div (click)="likeMes()"> 
+            <a href="#">{{messageData.likeArr.length }} </a> 
+            </div> 
         </div> 
-    </div> 
+    </div>
+
+    <div class="like-list" >
+        <div *ngFor="let u of messageData.likeArr">
+            {{u}} <br>
+        </div>
+    </div>
 </div>
 
-<div class="like-list" >
-    <div *ngFor="let u of messageObj.likeArr">
-        {{u}} <br>
+<ng-template  #loading>
+    <div class="container">
+        <div class="message">
+            loading...
+        </div>
     </div>
-</div>
+</ng-template>

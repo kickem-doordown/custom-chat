@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, OnDestroy, OnInit, Renderer2, AfterViewChecked, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, Renderer2, AfterViewInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -20,11 +20,13 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
   container: ElementRef;
 
   email: string;
-  messages: Observable<any[]>;
-  mesArr: any[];
+  messages: Observable<any>;
+  mesArr: any[] = [];
   mesSub: Subscription;
   lastdocid: string;
 
+  messageNum: number = 0;
+  pageSize: number = 10;
 
   constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router, public ren: Renderer2) {
     if(this.auth.auth.currentUser === null){
@@ -32,26 +34,45 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
     } else {
       
       this.email = this.auth.auth.currentUser.email;
-      this.messages = mesService.getObservable();
+      this.messages = mesService.getRecentMessages(this.pageSize);
+      this.messageNum = this.pageSize;
 
-      this.mesSub = this.messages.subscribe(data => {
-        this.mesArr = data;
-        
-        if(this.lastdocid && data[0].docid !== this.lastdocid ){
-          console.log("new message: " + data[0].docid);
-          this.scrollToBottom();
+      this.messages.pipe(take(1)).subscribe(data => {
+        console.log(data);
+        this.mesArr= data.docs;
+      });
+
+      this.mesSub = mesService.getMessageUpdates().subscribe(data => {
+        console.log(data);
+      
+        if(data[0].type === 'added' ) {
+          console.log("new message: " + data[0].payload.doc.id);
+          this.mesArr.unshift(data[0].payload.doc);
+          this.messageNum++;
         }
-        this.lastdocid = data[0].docid;
       });
     }
   }
+
   ngAfterViewInit(){
     this.ren.setStyle(this.container.nativeElement, 'height', window.innerHeight + "px");
     window.addEventListener("resize", ()=>{
       this.ren.setStyle(this.container.nativeElement, 'height', window.innerHeight + "px");
     });
-  }
 
+    this.chatContainer.nativeElement.addEventListener("scroll", ()=>{
+      
+      if( this.chatContainer.nativeElement.scrollTop == 0 && this.mesArr.length == this.messageNum){
+        this.messageNum += this.pageSize;
+        this.mesService.getPageAfter(this.pageSize, this.mesArr[this.mesArr.length-1]).subscribe((data)=>{
+          console.log(this.messageNum);
+          this.mesArr = this.mesArr.concat(data.docs);
+        });
+        console.log( "SCROLL");
+      }
+    });
+  }
+  
   ngOnDestroy(): void {
     if(this.mesSub)
       this.mesSub.unsubscribe();
@@ -74,6 +95,6 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
     try {
         this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
     } catch(err) { }                 
-}
+  }
 
 }
