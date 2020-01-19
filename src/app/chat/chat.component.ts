@@ -84,11 +84,13 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
       this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value, timestamp: Date.now()});
       this.messageText.nativeElement.value = "";
     }
+    this.messageText.nativeElement.focus();
     event.stopPropagation();
   }
 
   onMessageLike(messageObj){
     this.mesService.likeMessage(messageObj, this.email);
+    this.messageText.nativeElement.focus();
   }
 
   scrollToBottom() {

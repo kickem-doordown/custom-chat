@@ -1,7 +1,8 @@
 .container{
     display: flex; 
-    margin: 14px 14px 0px 14px; 
+    margin: 7px 14px 7px 14px; 
     background-color:honeydew;
+    border-radius: 15px;
 }
 
 .message{
@@ -27,9 +28,12 @@
 .like-container div{
     text-align: center; 
     font-weight: bold; 
-    width: 20px; 
-    height: 20px; 
+    width: 50px; 
+    height: 50px; 
     background-color:hotpink;
+    margin:5px;
+    border-radius: 15px;
+    line-height: 50px;
 }
 
 .like-container a{

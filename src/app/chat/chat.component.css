@@ -1,25 +1,116 @@
+body {
+    background-color: black;
+}
+
 .container {
-    display: flex; 
-    flex-direction:column;  
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
+    width: 90%;
+    margin: auto;
+    background-color: lightgray;
 }
 
-.chat-body{
-    flex : 1 1 100vh; 
-    display: flex; 
-    flex-direction:column-reverse; 
-    overflow: scroll; 
+.chat-body {
+    flex: 1 1 100vh;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    background-color: gray;
+    border-radius: 15px;
 }
 
-.chat-input{
-    flex: 0 0 100px; 
-    width:100%; 
+.chat-input {
+    width: 90%;
+    margin: auto;
 }
 
-.chat-form mat-form-field{
-    width: 80%;
+.chat-form mat-form-field {
+    width: 75%;
+    background-color: darkgray;
+    border-radius: 5px;
+    padding-left: 1%;
+    padding-right: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
 }
 
-.chat-form button{
-    width: 15%;
+.chat-form button {
+    width: 1em;
+    margin-left: 1%;
+}
+
+#header {
+    width: 100%;
+    /* Starting position */
+    -moz-transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    /* Apply animation to this element */
+    -moz-animation: example1 15s linear infinite;
+    -webkit-animation: example1 15s linear infinite;
+    animation: example1 15s linear infinite;
+}
+
+
+/* Move it (define the animation) */
+
+@-moz-keyframes example1 {
+    0% {
+        -moz-transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+    }
+}
+
+@-webkit-keyframes example1 {
+    0% {
+        -webkit-transform: translateX(100%);
+    }
+    100% {
+        -webkit-transform: translateX(-100%);
+    }
+}
+
+@keyframes example1 {
+    0% {
+        -moz-transform: translateX(100%);
+        /* Firefox bug fix */
+        -webkit-transform: translateX(100%);
+        /* Firefox bug fix */
+        transform: translateX(100%);
+    }
+    100% {
+        -moz-transform: translateX(-100%);
+        /* Firefox bug fix */
+        -webkit-transform: translateX(-100%);
+        /* Firefox bug fix */
+        transform: translateX(-100%);
+    }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
