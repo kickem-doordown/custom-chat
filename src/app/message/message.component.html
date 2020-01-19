@@ -1,27 +1,31 @@
 <div *ngIf="messageData else loading">
-    <div class="container" >
+    <div class="container">
         <div class="message">
-            <span class ="name"> {{messageData.user}}: </span>
+            <span class="name"> {{messageData.user}}: </span>
+            <br> {{messageData.value}}
             <br>
-            {{messageData.value}}
-            <br>
+            <div class="image-wrapper" *ngIf="imageVisible">
+                <img class="message-image" src={{messageData.value}}>
+                <br>
+            </div>
+
             <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>
         </div>
         <div class="like-container">
-            <div (click)="likeMes()"> 
-            <a href="#">{{messageData.likeArr.length }} </a> 
-            </div> 
-        </div> 
+            <div (click)="likeMes()">
+                <a href="#">{{messageData.likeArr.length }} </a>
+            </div>
+        </div>
     </div>
 
-    <div class="like-list" >
+    <div class="like-list">
         <div *ngFor="let u of messageData.likeArr">
             {{u}} <br>
         </div>
     </div>
 </div>
 
-<ng-template  #loading>
+<ng-template #loading>
     <div class="container">
         <div class="message">
             loading...

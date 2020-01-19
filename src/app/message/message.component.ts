@@ -16,6 +16,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageSub: Subscription;
 
   messageData: any;
+  
+  imageVisible: boolean = false;
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
   
@@ -26,6 +28,9 @@ export class MessageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data =>{
       this.messageData = data;
+      if (this.messageData.value.match(/\.(jpeg|jpg|gif|png)$/) != null) {
+        this.imageVisible = true;
+      }
     });
   }
 
