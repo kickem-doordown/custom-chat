@@ -13,7 +13,7 @@
         </div>
         <div class="like-container">
             <div (click)="likeMes()">
-                <a href="#">{{messageData.likeArr.length }} </a>
+                <a *ngIf="messageData.likeArr" href="#">{{messageData.likeArr.length }} </a>
             </div>
         </div>
     </div>
