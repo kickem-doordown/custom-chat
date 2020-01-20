@@ -27,6 +27,7 @@ export class MessagedbService {
 
   sendMessage(mes: Object){
     mes["likeArr"] = [];
+    mes["timestamp"] = Date.now();
     this.db.collection('messages').add(mes);
   }
 

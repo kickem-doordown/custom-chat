@@ -79,9 +79,8 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
   }
 
   sendMessage(event){
-
     if(this.messageText.nativeElement.value && this.messageText.nativeElement.value !== ''){
-      this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value, timestamp: Date.now()});
+      this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value});
       this.messageText.nativeElement.value = "";
     }
     this.messageText.nativeElement.focus();
