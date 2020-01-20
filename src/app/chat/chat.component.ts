@@ -90,7 +90,9 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
 
   onMessageLike(messageObj){
     this.mesService.likeMessage(messageObj, this.email);
-    this.messageText.nativeElement.focus();
+    if(this.messageText.nativeElement.value) {
+      this.messageText.nativeElement.focus();
+    }
   }
 
   scrollToBottom() {
