@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { MessagedbService } from '../messagedb.service';
 import { DatePipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
@@ -9,6 +9,9 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit, OnDestroy {
+  
+  @ViewChild('likeContainer', {static: false}) 
+  likeContainer: ElementRef;
 
   @Input()
   messageDoc: any;
@@ -18,6 +21,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageData: any;
   
   imageVisible: boolean = false;
+
+  heartVisible: boolean = false;
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
   
@@ -37,6 +42,15 @@ export class MessageComponent implements OnInit, OnDestroy {
   likeMes(){
     this.messageData.docid = this.messageDoc.id;
     this.liked.emit(this.messageData);
+    this.heartVisible = !this.heartVisible;
+    if (this.heartVisible) {
+      this.likeContainer.nativeElement.style.backgroundColor="transparent";
+      this.likeContainer.nativeElement.style.opacity="1";
+    } else {
+      
+      this.likeContainer.nativeElement.style.backgroundColor="hotpink";
+      this.likeContainer.nativeElement.style.opacity="";
+    }
   }
 
   ngOnDestroy(){
