@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { mapToMapExpression } from '@angular/compiler/src/render3/util';
-import { map, take, skip, first } from 'rxjs/operators';
-import { CollectionReference } from '@angular/fire/firestore'
+import { skip, first } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import * as firebase from 'firebase/app';
 export class MessagedbService {
   canLike = true;
 
-  constructor(public db: AngularFirestore) { }
+  constructor(public db: AngularFirestore, public http: HttpClient) { }
 
   getRecentMessages(num: number){
     return this.db.collection('messages', ref => ref.orderBy("timestamp", "desc").limit(num)).get().pipe(first());
@@ -26,9 +26,11 @@ export class MessagedbService {
   }
 
   sendMessage(mes: Object){
-    mes["likeArr"] = [];
-    mes["timestamp"] = Date.now();
-    this.db.collection('messages').add(mes);
+    this.http.post(environment.messageUrl, mes).pipe(first()).subscribe(resp => console.log(resp));
+
+    // mes["likeArr"] = [];
+    // mes["timestamp"] = Date.now();
+    // this.db.collection('messages').add(mes);
   }
 
   likeMessage(messageObj: any, user: string){
