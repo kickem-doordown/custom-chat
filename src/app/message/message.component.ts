@@ -9,8 +9,8 @@ import { Observable, Subscription } from 'rxjs';
   styleUrls: ['./message.component.css']
 })
 export class MessageComponent implements OnInit, OnDestroy {
-  
-  @ViewChild('likeContainer', {static: false}) 
+
+  @ViewChild('likeContainer', { static: false })
   likeContainer: ElementRef;
 
   @Input()
@@ -19,41 +19,40 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageSub: Subscription;
 
   messageData: any;
-  
+
   imageVisible: boolean = false;
 
   heartVisible: boolean = false;
 
+  heartColor: string = "hotpink";
+
   @Output() liked: EventEmitter<any> = new EventEmitter();
+
+  constructor(public mesService: MessagedbService) {}
   
-  constructor(public mesService: MessagedbService) {
-   
-   }
 
   ngOnInit() {
-    this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data =>{
+    this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data => {
       this.messageData = data;
       if (this.messageData.value.match(/\.(jpeg|jpg|gif|png)$/) != null) {
         this.imageVisible = true;
       }
+      this.updateHeart();
     });
   }
 
-  likeMes(){
+  likeMes() {
     this.messageData.docid = this.messageDoc.id;
     this.liked.emit(this.messageData);
-    this.heartVisible = !this.heartVisible;
-    if (this.heartVisible) {
-      this.likeContainer.nativeElement.style.backgroundColor="transparent";
-      this.likeContainer.nativeElement.style.opacity="1";
-    } else {
-      
-      this.likeContainer.nativeElement.style.backgroundColor="hotpink";
-      this.likeContainer.nativeElement.style.opacity="";
-    }
+    this.updateHeart();
   }
 
-  ngOnDestroy(){
+  updateHeart() {
+    this.heartVisible = this.messageData.likeArr.includes(this.messageData.user);
+    this.heartColor = this.heartVisible ? "transparent" : "hotpink";
+  }
+
+  ngOnDestroy() {
     this.messageSub.unsubscribe();
   }
 
