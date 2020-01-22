@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, Renderer2, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -27,8 +27,9 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
 
   messageNum: number = 0;
   pageSize: number = 10;
+  containerStyle = {"height": window.innerHeight + "px"};
 
-  constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router, public ren: Renderer2) {
+  constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router) {
     if(this.auth.auth.currentUser === null){
       this.router.navigate(['/loginpage']);
     } else {
@@ -55,9 +56,8 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
   }
 
   ngAfterViewInit(){
-    this.ren.setStyle(this.container.nativeElement, 'height', window.innerHeight + "px");
     window.addEventListener("resize", ()=>{
-      this.ren.setStyle(this.container.nativeElement, 'height', window.innerHeight + "px");
+      this.containerStyle = {"height": window.innerHeight + "px"};
     });
 
     this.chatContainer.nativeElement.addEventListener("scroll", ()=>{
