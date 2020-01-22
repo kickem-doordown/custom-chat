@@ -34,11 +34,14 @@ export class MessagedbService {
   }
 
   likeMessage(messageObj: any, user: string){
-    if(messageObj.likeArr.includes(user)) {
-      this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});
-    } else {
-      this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayUnion(user)});
-    }
+    let req = {"messageObj": messageObj, "user": user}
+    this.http.post(environment.likeUrl, req).pipe(first()).subscribe(resp => {console.log(resp)});
+
+    // if(messageObj.likeArr.includes(user)) {
+    //   this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});
+    // } else {
+    //   this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayUnion(user)});
+    // }
   }
   
   getMessageData(doc: any){

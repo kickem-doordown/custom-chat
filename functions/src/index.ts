@@ -35,3 +35,27 @@ export const sendMessage = functions.https.onRequest((request, response) => {
         }
     });
 });
+
+export const likeMessage = functions.https.onRequest((request, response) => {
+    cors(request, response, async () => {
+        const messageObj = request.body.messageObj;
+        const user = request.body.user;
+
+        if(!messageObj || !user){
+            response.status(500).send({"error": "No user or message in request"});
+        } else {
+            try {
+                let doc;
+                if(messageObj.likeArr.includes(user)) {
+                    doc = await admin.firestore().collection('messages').doc(messageObj.docid).update({"likeArr": admin.firestore.FieldValue.arrayRemove(user)});
+                } else {
+                    doc = await admin.firestore().collection('messages').doc(messageObj.docid).update({"likeArr": admin.firestore.FieldValue.arrayUnion(user)});
+                }
+                response.send({"success": doc.writeTime});
+            }
+            catch {
+                response.status(500).send({"error": "firebase error"});
+            }
+        }
+    });
+});
