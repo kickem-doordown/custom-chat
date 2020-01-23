@@ -1,17 +1,24 @@
 <div class="container" #container [ngStyle]="containerStyle">
     <div id="header">
-        <img src="assets/uc.gif" >
+        <img src="assets/uc.gif">
     </div>
     <div class="chat-body" #chat>
-        <div  *ngFor="let m of mesArr"><app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message></div>
+        <div *ngFor="let m of mesArr">
+            <app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message>
+        </div>
     </div>
 
     <div class="chat-input">
-        <form class="chat-form" (ngSubmit)="sendMessage($event)">
-            <mat-form-field>
-                <input matInput #messageText autocomplete="off">
-            </mat-form-field>
-            <button  mat-raised-button>send  </button>
+        <form class="chat-form" (ngSubmit)="sendMessage($event, buttonType)">
+            <div style="display: flex; flex-direction: row;">
+                <mat-form-field>
+                    <input matInput #messageText autocomplete="off">
+                </mat-form-field>
+                <div style="display:flex; flex-direction: column;">
+                    <button id="send" (click)="sendMessage($event, 'normal')" mat-raised-button>send  </button>
+                    <button id="anon" (click)="sendMessage($event, 'anon')" mat-raised-button>anon </button>
+                </div>
+            </div>
         </form>
     </div>
 

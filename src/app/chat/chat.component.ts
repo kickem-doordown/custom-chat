@@ -78,9 +78,11 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
       this.mesSub.unsubscribe();
   }
 
-  sendMessage(event){
+  sendMessage(event, buttonType){
+    console.log(event);
+    console.log(buttonType);
     if(this.messageText.nativeElement.value && this.messageText.nativeElement.value !== ''){
-      this.mesService.sendMessage({user: this.email, value: this.messageText.nativeElement.value});
+      this.mesService.sendMessage({user: buttonType === "normal" ? this.email : "[anon]", value: this.messageText.nativeElement.value});
       this.messageText.nativeElement.value = "";
     }
     this.messageText.nativeElement.focus();
