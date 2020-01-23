@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
@@ -27,6 +27,8 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   heartColor: string = "hotpink";
 
+  heartAnimation: string = "none";
+
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
   constructor(public mesService: MessagedbService, public auth: AngularFireAuth) {}
@@ -46,6 +48,7 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.messageData.docid = this.messageDoc.id;
     this.liked.emit(this.messageData);
     this.updateHeart();
+    this.heartAnimation = "pulse 1s ease"
   }
 
   updateHeart() {

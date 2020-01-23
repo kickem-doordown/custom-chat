@@ -72,7 +72,6 @@
     fill: red;
     top: 5px;
     width: 50px;
-    animation: pulse 1s ease;
 }
 
 @keyframes pulse {
