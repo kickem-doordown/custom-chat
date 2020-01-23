@@ -48,12 +48,12 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.messageData.docid = this.messageDoc.id;
     this.liked.emit(this.messageData);
     this.updateHeart();
-    this.heartAnimation = "pulse 1s ease"
   }
 
   updateHeart() {
     this.heartVisible = this.messageData.likeArr.includes(this.auth.auth.currentUser.email);
     this.heartColor = this.heartVisible ? "transparent" : "hotpink";
+    this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
   }
 
   ngOnDestroy() {
