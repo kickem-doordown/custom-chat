@@ -17,16 +17,17 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 
 export const sendMessage = functions.https.onRequest((request, response) => {
     cors(request, response, async () => {
-        const message = request.body;
+        const message = request.body.messageObj;
+        const docid = request.body.docid;
         console.log(message);
 
-        if(!message.value || !message.user){
+        if(!message.value || !message.user || !docid){
             response.status(500).send({"error": true});
         } else {
             message.timestamp = Date.now();
             message.likeArr = [];
             try {
-                await admin.firestore().collection('messages').add(message);
+                await admin.firestore().collection('messages').doc(docid).set(message);
                 response.send({"success": true});
             }
             catch {

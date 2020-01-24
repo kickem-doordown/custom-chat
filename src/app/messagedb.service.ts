@@ -25,8 +25,10 @@ export class MessagedbService {
     return this.db.collection('messages', ref => ref.orderBy("timestamp", "desc").limit(1)).snapshotChanges().pipe(skip(1));
   }
 
-  sendMessage(mes: Object){
-    this.http.post(environment.messageUrl, mes).pipe(first()).subscribe(resp => console.log(resp));
+  sendMessage(mes: any){
+    let docid = mes.user + Date.now();
+    let req = {"messageObj": mes, "docid": docid};
+    this.http.post(environment.messageUrl, req).pipe(first()).subscribe(resp => console.log(resp));
 
     // mes["likeArr"] = [];
     // mes["timestamp"] = Date.now();
@@ -34,7 +36,7 @@ export class MessagedbService {
   }
 
   likeMessage(messageObj: any, user: string){
-    let req = {"messageObj": messageObj, "user": user}
+    let req = {"messageObj": messageObj, "user": user};
     this.http.post(environment.likeUrl, req).pipe(first()).subscribe(resp => {console.log(resp)});
 
     // if(messageObj.likeArr.includes(user)) {
