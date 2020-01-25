@@ -4,8 +4,8 @@
             <span class="name"> {{messageData.user}}: </span>
             <br> {{messageData.value}}
             <br>
-            <div class="image-wrapper" *ngIf="imageVisible">
-                <img class="message-image" src={{messageData.value}}>
+            <div class="image-wrapper" *ngIf="imageUrl">
+                <img class="message-image" [src]="imageUrl">
             </div>
             <div class="image-wrapper" *ngIf="tweetId">
                 <ngx-tweet [tweetId]="tweetId"></ngx-tweet>

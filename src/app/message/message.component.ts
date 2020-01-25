@@ -33,6 +33,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   
   tweetId: string;
   youtubeId: string;
+  imageUrl: string;
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
@@ -42,29 +43,57 @@ export class MessageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data => {
       this.messageData = data;
-      if (this.messageData.value.match(/\.(jpeg|jpg|gif|png)$/) != null) {
-        this.imageVisible = true;
+
+      let words = this.messageData.value.split(" ");
+
+      for(let i = 0; i < words.length; i++){
+        //url check
+        this.url_parser(words[i]);
+        
+        //image check
+        if (words[i].match(/\.(jpeg|jpg|gif|png)$/) != null) {
+          this.imageUrl = words[i];
+        }
+
+        //youtube check
+        this.youtubeId = this.youtube_parser(words[i]);
+        
+        //twitter check
+        this.tweetId = this.twitter_parser(words[i]);
       }
-      var tweetid = this.messageData.value.match(/.*twitter.com\/.*\/status\/([0-9]+)/);
-      this.youtubeId = this.youtube_parser(this.messageData.value);
-      if (tweetid != null) {
-        // 0th entry is the full string for some reason
-        this.tweetId = tweetid[1].trim();
-      }
+
       this.updateHeart();
     });
+  }
+
+  url_parser(url){
+    var regExp = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+    
+    var match = url.match(regExp);
+    if(match) {
+      return match[0];
+    } else {
+      return undefined;
+    }
   }
 
   youtube_parser(url){
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
     var match = url.match(regExp);
-    console.log(match);
     if(match && match[7]){
       return match[7];
     } else {
       return undefined;
     }
-    //return (match&&match[7].length==11)? match[7] : undefined;
+  }
+
+  twitter_parser(url){
+    var match = url.match(/.*twitter.com\/.*\/status\/([0-9]+)/);
+    if(match && match[1]) {
+      return match[1].trim();
+    } else {
+      return undefined;
+    }
   }
 
   likeMes() {
