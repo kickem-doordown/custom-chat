@@ -9,7 +9,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MessageComponent implements OnInit, OnDestroy {
 
   @ViewChild('likeContainer', { static: false })
   likeContainer: ElementRef;
@@ -49,11 +49,6 @@ export class MessageComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.updateHeart();
     });
-  }
-
-  ngAfterViewInit() {
-    // @ts-ignore
-    twttr.widgets.load();
   }
 
   likeMes() {
