@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-size": "node --max_old_space_size=12000 ./node_modules/@angular/cli/bin/ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
