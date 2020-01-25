@@ -63,15 +63,8 @@ export class MessageComponent implements OnInit, OnDestroy {
         //twitter check
         let t = this.twitter_parser(words[i]);
         if(t)
-          this.tweetId = t;
-
-        
+          this.tweetId = t; 
       }
-      console.log("---message embeds: ");
-      console.log("tweet id: " + this.tweetId);
-      console.log("yt id: " + this.youtubeId);
-      console.log("image url: " + this.imageUrl);
-      console.log("----------");
       this.updateHeart();
     });
   }
