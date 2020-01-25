@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnDestroy, AfterViewInit{
+export class ChatComponent implements OnInit, OnDestroy, AfterViewInit{
   
   @ViewChild('messageText', {static: false}) 
   messageText: ElementRef;
@@ -53,6 +53,12 @@ export class ChatComponent implements OnDestroy, AfterViewInit{
         }
       });
     }
+  }
+
+  ngOnInit(){
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.body.appendChild(tag);
   }
 
   ngAfterViewInit(){

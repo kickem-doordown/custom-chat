@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@angular/youtube-player": "^8.2.3",
     "firebase": "^7.6.1",
     "hammerjs": "^2.0.8",
     "ngx-tweet": "^2.0.3",

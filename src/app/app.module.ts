@@ -16,6 +16,7 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTweetModule } from "ngx-tweet";
+import { YouTubePlayerModule } from '@angular/youtube-player';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NgxTweetModule } from "ngx-tweet";
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
-    NgxTweetModule
+    NgxTweetModule,
+    YouTubePlayerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

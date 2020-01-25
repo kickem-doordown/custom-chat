@@ -7,8 +7,11 @@
             <div class="image-wrapper" *ngIf="imageVisible">
                 <img class="message-image" src={{messageData.value}}>
             </div>
-            <div class="image-wrapper" *ngIf="tweetId != ''">
-                <ngx-tweet tweetId="{{tweetId}}"></ngx-tweet>
+            <div class="image-wrapper" *ngIf="tweetId">
+                <ngx-tweet [tweetId]="tweetId"></ngx-tweet>
+            </div>
+            <div class="image-wrapper" *ngIf="youtubeId">
+                <youtube-player [width]="200" [height]="100" [videoId]="youtubeId"></youtube-player>
             </div>
 
             <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>

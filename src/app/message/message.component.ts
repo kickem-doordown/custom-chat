@@ -31,7 +31,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   heartScale: string = "scale(1)";
   heartTextScale: string = "1";
   
-  tweetId: string = "";
+  tweetId: string;
+  youtubeId: string;
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
@@ -45,12 +46,25 @@ export class MessageComponent implements OnInit, OnDestroy {
         this.imageVisible = true;
       }
       var tweetid = this.messageData.value.match(/.*twitter.com\/.*\/status\/([0-9]+)/);
+      this.youtubeId = this.youtube_parser(this.messageData.value);
       if (tweetid != null) {
         // 0th entry is the full string for some reason
         this.tweetId = tweetid[1].trim();
       }
       this.updateHeart();
     });
+  }
+
+  youtube_parser(url){
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    console.log(match);
+    if(match && match[7]){
+      return match[7];
+    } else {
+      return undefined;
+    }
+    //return (match&&match[7].length==11)? match[7] : undefined;
   }
 
   likeMes() {
