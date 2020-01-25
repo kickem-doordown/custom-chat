@@ -9,7 +9,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit, OnDestroy {
+export class MessageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('likeContainer', { static: false })
   likeContainer: ElementRef;
@@ -28,6 +28,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   heartColor: string = "hotpink";
 
   heartAnimation: string = "none";
+  
+  tweetId: string = "";
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
@@ -40,8 +42,18 @@ export class MessageComponent implements OnInit, OnDestroy {
       if (this.messageData.value.match(/\.(jpeg|jpg|gif|png)$/) != null) {
         this.imageVisible = true;
       }
+      var tweetid = this.messageData.value.match(/.*twitter.com\/.*\/status\/([0-9]+)/);
+      if (tweetid != null) {
+        // 0th entry is the full string for some reason
+        this.tweetId = tweetid[1].trim();
+      }
       this.updateHeart();
     });
+  }
+
+  ngAfterViewInit() {
+    // @ts-ignore
+    twttr.widgets.load();
   }
 
   likeMes() {

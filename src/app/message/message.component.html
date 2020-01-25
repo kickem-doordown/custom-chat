@@ -6,7 +6,9 @@
             <br>
             <div class="image-wrapper" *ngIf="imageVisible">
                 <img class="message-image" src={{messageData.value}}>
-                <br>
+            </div>
+            <div class="image-wrapper" *ngIf="tweetId != ''">
+                <ngx-tweet tweetId="{{tweetId}}"></ngx-tweet>
             </div>
 
             <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>

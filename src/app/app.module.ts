@@ -15,7 +15,7 @@ import { MessageComponent } from './message/message.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgxTweetModule } from "ngx-tweet";
 
 @NgModule({
   declarations: [
@@ -35,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
-    AngularFireStorageModule // imports firebase/storage only needed for storage features
+    AngularFireStorageModule, // imports firebase/storage only needed for storage features
+    NgxTweetModule
   ],
   providers: [],
   bootstrap: [AppComponent]
