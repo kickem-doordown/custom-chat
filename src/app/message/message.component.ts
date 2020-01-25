@@ -56,12 +56,22 @@ export class MessageComponent implements OnInit, OnDestroy {
         }
 
         //youtube check
-        this.youtubeId = this.youtube_parser(words[i]);
+        let yt = this.youtube_parser(words[i]);
+        if(yt)
+          this.youtubeId = yt;
         
         //twitter check
-        this.tweetId = this.twitter_parser(words[i]);
-      }
+        let t = this.twitter_parser(words[i]);
+        if(t)
+          this.tweetId = t;
 
+        
+      }
+      console.log("---message embeds: ");
+      console.log("tweet id: " + this.tweetId);
+      console.log("yt id: " + this.youtubeId);
+      console.log("image url: " + this.imageUrl);
+      console.log("----------");
       this.updateHeart();
     });
   }
