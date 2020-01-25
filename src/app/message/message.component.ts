@@ -28,6 +28,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   heartColor: string = "hotpink";
 
   heartAnimation: string = "none";
+  heartScale: string = "scale(1)";
+  heartTextScale: string = "1";
   
   tweetId: string = "";
 
@@ -61,6 +63,12 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.heartVisible = this.messageData.likeArr.includes(this.auth.auth.currentUser.email);
     this.heartColor = this.heartVisible ? "transparent" : "hotpink";
     this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
+    var minSize = 5;
+    var numLikes = Math.max(minSize, this.messageData.likeArr.length + minSize);
+    var scale = .125;
+    this.heartScale = "scale(" + numLikes*scale + ")";
+    var unscaledTextSize = 16;
+    this.heartTextScale = (16*1/(scale*numLikes)) + "px";
   }
 
   ngOnDestroy() {
