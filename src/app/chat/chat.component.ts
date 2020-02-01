@@ -4,6 +4,7 @@ import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-chat',
@@ -29,12 +30,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit{
   pageSize: number = 10;
   containerStyle = {"height": window.innerHeight + "px"};
 
-  constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router) {
-    if(this.auth.auth.currentUser === null){
+  constructor(public mesService: MessagedbService, public auth: AuthService, public router: Router) {
+    if(localStorage.getItem('user') == null){
       this.router.navigate(['/loginpage']);
     } else {
       
-      this.email = this.auth.auth.currentUser.email;
+      this.email = this.auth.userData.email;
       this.messages = mesService.getRecentMessages(this.pageSize);
       this.messageNum = this.pageSize;
 

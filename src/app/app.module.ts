@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatInputModule } from '@angular/material'
 import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
+import { AuthService } from "./core/auth.service";
 import { environment } from '../environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
@@ -40,7 +41,7 @@ import { YouTubePlayerModule } from '@angular/youtube-player';
     NgxTweetModule,
     YouTubePlayerModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

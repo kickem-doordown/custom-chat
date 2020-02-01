@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from "../core/auth.service";
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LoginpageComponent implements OnInit {
 
-  constructor(public auth: AngularFireAuth, public router: Router) { }
+  constructor(public auth: AuthService, public router: Router) { }
 
   ngOnInit() {
   }
@@ -18,11 +18,6 @@ export class LoginpageComponent implements OnInit {
   login(event){
     let user = event.target.elements[0].value;
     let pw = event.target.elements[1].value;
-
-    this.auth.auth.signInWithEmailAndPassword(user, pw).then(cred =>{
-      this.router.navigate(['']);
-    }).catch(err => {
-      console.log(err);
-    });
+    this.auth.SignIn(user, pw);
   }
 }
