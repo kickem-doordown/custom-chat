@@ -29,10 +29,10 @@
         </div>
     </div>
 
-    <div class="like-list">
-        <div *ngFor="let u of messageData.likeArr">
-            {{u}} <br>
-        </div>
+    <div class="like-list" *ngIf="messageData.likeArr.length > 0">
+        <span class="like-element" *ngFor="let u of messageData.likeArr">
+            {{u}}
+        </span>
     </div>
 </div>
 
