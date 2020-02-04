@@ -103,12 +103,12 @@ export class MessageComponent implements OnInit, OnDestroy {
     this.messageData.docid = this.messageDoc.id;
     this.liked.emit(this.messageData);
     this.updateHeart();
+    this.heartAnimation = !this.heartVisible ? "pulse 1s ease" : "none";
   }
 
   updateHeart() {
     this.heartVisible = this.messageData.likeArr.includes(this.auth.auth.currentUser.email);
     this.heartColor = this.heartVisible ? "transparent" : "hotpink";
-    this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
     var minSize = 5;
     var numLikes = Math.max(minSize, this.messageData.likeArr.length + minSize);
     var scale = .125;
