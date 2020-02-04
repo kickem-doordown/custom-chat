@@ -20,7 +20,9 @@ export class AuthService {
         this.router.navigate(['']);
       } else {
         localStorage.setItem('user', null);
-        this.router.navigate(['/loginpage']);
+        if (!this.router.navigated) {
+          this.router.navigate(['/loginpage']);
+        }
       }
       
     });
@@ -33,6 +35,17 @@ export class AuthService {
         this.ngZone.run(() => {
           this.router.navigate(['']);
         });
+      }).catch((error) => {
+        window.alert(error.message)
+      })
+  }
+
+  // Sign up with email/password
+  SignUp(email, password) {
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        window.alert("You have been successfully registered!");
+        console.log(result.user)
       }).catch((error) => {
         window.alert(error.message)
       })

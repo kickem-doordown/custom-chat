@@ -18,13 +18,15 @@ import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTweetModule } from "ngx-tweet";
 import { YouTubePlayerModule } from '@angular/youtube-player';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MessageComponent,
     LoginpageComponent,
-    ChatComponent
+    ChatComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
