@@ -2,7 +2,7 @@
     <div class="container">
         <div class="message">
             <span class="name"> {{messageData.user}}: </span>
-            <br> {{messageData.value}}
+            <br> <span [innerHtml]="messageText"> </span>
             <br>
             <div class="image-wrapper" *ngIf="imageUrl">
                 <img class="message-image" [src]="imageUrl">

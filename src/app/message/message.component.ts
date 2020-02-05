@@ -1,8 +1,11 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild, AfterViewInit, SecurityContext } from '@angular/core';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
+import Autolinker from 'autolinker';
+import { DomSanitizer} from '@angular/platform-browser';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-message',
@@ -34,10 +37,12 @@ export class MessageComponent implements OnInit, OnDestroy {
   tweetId: string;
   youtubeId: string;
   imageUrl: string;
+  messageText: string;
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
-  constructor(public mesService: MessagedbService, public auth: AngularFireAuth) {}
+  constructor(public mesService: MessagedbService, 
+              public auth: AngularFireAuth) {}
   
 
   ngOnInit() {
@@ -65,6 +70,11 @@ export class MessageComponent implements OnInit, OnDestroy {
         if(t)
           this.tweetId = t; 
       }
+      this.messageText = Autolinker.link(
+        _.escape(this.messageData.value), {
+        mention: 'twitter',
+        truncate: {length: 32}
+      });
       this.updateHeart();
     });
   }
