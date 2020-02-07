@@ -1,28 +1,39 @@
-<div class="container" #container [ngStyle]="containerStyle">
-    <div id="header">
-        <img src="assets/uc.gif">
-    </div>
-    <a (click)="auth.SignOut()">
-        Log out
-    </a>
-    <div class="chat-body" #chat>
-        <div *ngFor="let m of mesArr">
-            <app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message>
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenavleft mode="over">
+        Left content - to be used for multiple chats
+    </mat-sidenav>
+    <mat-sidenav #sidenavright mode="over" position="end">
+        Right content - to be used for profile data
+    </mat-sidenav>
+
+    <div class="container" #container [ngStyle]="containerStyle">
+        <div id="header">
+            <img src="assets/uc.gif">
         </div>
-    </div>
-
-    <div class="chat-input">
-        <form class="chat-form" (ngSubmit)="sendMessage($event, buttonType)">
-            <div style="display: flex; flex-direction: row;">
-                <mat-form-field>
-                    <input matInput #messageText autocomplete="off">
-                </mat-form-field>
-                <div style="display:flex; flex-direction: column;">
-                    <button id="send" (click)="sendMessage($event, 'normal')" mat-raised-button>send  </button>
-                    <button id="anon" (click)="sendMessage($event, 'anon')" mat-raised-button>anon </button>
-                </div>
+        <a (click)="auth.SignOut()">
+            Log out
+         </a>
+        <a (click)="sidenavleft.toggle()">Sidebar Left</a>
+        <a (click)="sidenavright.toggle()">Sidebar Right</a>
+        <div class="chat-body" #chat>
+            <div *ngFor="let m of mesArr">
+                <app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message>
             </div>
-        </form>
-    </div>
+        </div>
 
-</div>
+        <div class="chat-input">
+            <form class="chat-form" (ngSubmit)="sendMessage($event, buttonType)">
+                <div style="display: flex; flex-direction: row;">
+                    <mat-form-field>
+                        <input matInput #messageText autocomplete="off">
+                    </mat-form-field>
+                    <div style="display:flex; flex-direction: column;">
+                        <button id="send" (click)="sendMessage($event, 'normal')" mat-raised-button>send  </button>
+                        <button id="anon" (click)="sendMessage($event, 'anon')" mat-raised-button>anon </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</mat-sidenav-container>

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -36,8 +36,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       this.router.navigate(['/loginpage']);
     } else {
 
-      this.email = this.auth.userData.email;
-      console.log(this.auth.userData);
       this.messages = mesService.getRecentMessages(this.pageSize);
       this.messageNum = this.pageSize;
 
@@ -88,12 +86,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendMessage(event, buttonType) {
-    console.log(event);
-    console.log(buttonType);
     if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
       this.mesService.sendMessage({ 
         user: buttonType === "normal" 
-          ? (this.displayName != null ? this.displayName : this.email) 
+          ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email) 
           : "[anon]", 
         value: this.messageText.nativeElement.value });
       this.messageText.nativeElement.value = "";

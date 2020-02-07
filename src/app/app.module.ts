@@ -17,6 +17,7 @@ import { LoginpageComponent } from './loginpage/loginpage.component';
 import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTweetModule } from "ngx-tweet";
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SignupComponent } from './signup/signup.component';
 
@@ -41,7 +42,8 @@ import { SignupComponent } from './signup/signup.component';
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     NgxTweetModule,
-    YouTubePlayerModule
+    YouTubePlayerModule,
+    MatSidenavModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
