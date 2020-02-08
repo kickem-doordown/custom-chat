@@ -14,6 +14,7 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MessageComponent } from './message/message.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
+import {MatIconModule} from '@angular/material/icon';
 import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTweetModule } from "ngx-tweet";
@@ -45,7 +46,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     NgxTweetModule,
     YouTubePlayerModule,
     MatSidenavModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatIconModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

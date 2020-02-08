@@ -112,6 +112,9 @@ svg {
 }
 
 .nsfw-blur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     backdrop-filter: blur(25px);
     float: left;
     position: absolute;
@@ -122,5 +125,12 @@ svg {
     border-radius: 15px;
     z-index: 10;
     text-align: center;
+}
+
+.nsfw-blur span {
+    background-color: honeydew;
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-flex;
     vertical-align: middle;
 }
