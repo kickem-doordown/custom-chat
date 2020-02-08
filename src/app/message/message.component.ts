@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import Autolinker from 'autolinker';
 import { DomSanitizer} from '@angular/platform-browser';
 import * as _ from 'lodash';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-message',
@@ -23,6 +24,8 @@ export class MessageComponent implements OnInit, OnDestroy {
   messageSub: Subscription;
 
   messageData: any;
+
+  nsfw: boolean = false;
 
   imageVisible: boolean = false;
 
@@ -42,7 +45,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
   constructor(public mesService: MessagedbService, 
-              public auth: AngularFireAuth) {}
+              public authService: AuthService) {}
   
 
   ngOnInit() {
@@ -75,6 +78,9 @@ export class MessageComponent implements OnInit, OnDestroy {
         mention: 'twitter',
         truncate: {length: 32}
       });
+
+      this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;
+      
       this.updateHeart();
     });
   }
@@ -117,7 +123,7 @@ export class MessageComponent implements OnInit, OnDestroy {
   }
 
   updateHeart() {
-    this.heartVisible = this.messageData.likeArr.includes(this.auth.auth.currentUser.email);
+    this.heartVisible = this.messageData.likeArr.includes(this.authService.userData.email);
     this.heartColor = this.heartVisible ? "transparent" : "hotpink";
     var minSize = 5;
     var numLikes = Math.max(minSize, this.messageData.likeArr.length + minSize);

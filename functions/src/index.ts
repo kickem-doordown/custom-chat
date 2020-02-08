@@ -43,7 +43,7 @@ export const likeMessage = functions.https.onRequest((request, response) => {
         const user = request.body.user;
 
         if(!messageObj || !user){
-            response.status(500).send({"error": "No user or message in request"});
+            response.status(500).send({"error": "No user or message in request. User: " + user + " message: " + messageObj});
         } else {
             try {
                 let doc;
