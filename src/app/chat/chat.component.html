@@ -7,14 +7,20 @@
     </mat-sidenav>
 
     <div class="container" #container [ngStyle]="containerStyle">
+        <span>
+        <a style="float:left;"(click)="sidenavleft.toggle()">
+            <mat-icon>menu</mat-icon>
+        </a>
+        <a style="float:right;"(click)="sidenavright.toggle()">
+            <mat-icon>settings</mat-icon>
+        </a>
+        </span>
         <div id="header">
             <img src="assets/uc.gif">
         </div>
         <a (click)="auth.SignOut()">
             Log out
          </a>
-        <a (click)="sidenavleft.toggle()">Sidebar Left</a>
-        <a (click)="sidenavright.toggle()">Sidebar Right</a>
         <div class="chat-body" #chat>
             <div *ngFor="let m of mesArr">
                 <app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message>
