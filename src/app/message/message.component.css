@@ -4,6 +4,7 @@
     background-color: honeydew;
     border-radius: 15px;
     width: 90%;
+    position: relative;
 }
 
 .message {
@@ -37,6 +38,7 @@
     margin: 5px;
     border-radius: 15px;
     line-height: 50px;
+    z-index: 20;
 }
 
 svg {
@@ -84,12 +86,14 @@ svg {
     margin-top: 2px;
     width: 50px;
     overflow: visible;
+    z-index: 20;
 }
 
 .heart-drawing {
     fill: red;
     top: 5px;
     width: 50px;
+    z-index: 20;
 }
 
 @keyframes pulse {
@@ -105,4 +109,18 @@ svg {
         transform: scale(1);
         transform-origin: 50% 50%;
     }
+}
+
+.nsfw-blur {
+    backdrop-filter: blur(10px);
+    float: left;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    z-index: 10;
+    text-align: center;
+    vertical-align: middle;
 }

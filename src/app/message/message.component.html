@@ -2,7 +2,9 @@
     <div class="container">
         <div class="message">
             <span class="name"> {{messageData.user}}: </span>
-            <br> <span [innerHtml]="messageText"> </span>
+            <span>
+                <div class="nsfw-blur" *ngIf="nsfw" (click)="nsfw = false">NSFW</div>
+                <br> <span [innerHtml]="messageText"> </span>
             <br>
             <div class="image-wrapper" *ngIf="imageUrl">
                 <img class="message-image" [src]="imageUrl">
@@ -13,7 +15,7 @@
             <div class="image-wrapper" *ngIf="youtubeId">
                 <youtube-player [width]="200" [height]="100" [videoId]="youtubeId"></youtube-player>
             </div>
-
+            </span>
             <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>
         </div>
         <div class="like-container">
