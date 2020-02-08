@@ -15,13 +15,13 @@
         <a style="float:left;"(click)="sidenavleft.toggle()">
             <mat-icon>menu</mat-icon>
         </a>
+        <marquee id="header">
+            <img src="assets/uc.gif">
+        </marquee>
         <a style="float:right;"(click)="sidenavright.toggle()">
             <mat-icon>settings</mat-icon>
         </a>
         </span>
-        <div id="header">
-            <img src="assets/uc.gif">
-        </div>
         <div class="chat-body" #chat>
             <div *ngFor="let m of mesArr">
                 <app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message>
