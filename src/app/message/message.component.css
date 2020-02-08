@@ -112,7 +112,7 @@ svg {
 }
 
 .nsfw-blur {
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(25px);
     float: left;
     position: absolute;
     left: 0px;

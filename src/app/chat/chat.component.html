@@ -23,6 +23,7 @@
 
         <div class="chat-input">
             <form class="chat-form" (ngSubmit)="sendMessage($event, buttonType)">
+                <mat-slide-toggle [(ngModel)]="nsfw" [ngModelOptions]="{standalone: true}">NSFW</mat-slide-toggle>
                 <div style="display: flex; flex-direction: row;">
                     <mat-form-field>
                         <input matInput #messageText autocomplete="off">

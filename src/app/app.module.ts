@@ -20,6 +20,7 @@ import { NgxTweetModule } from "ngx-tweet";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SignupComponent } from './signup/signup.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { SignupComponent } from './signup/signup.component';
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     NgxTweetModule,
     YouTubePlayerModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSlideToggleModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

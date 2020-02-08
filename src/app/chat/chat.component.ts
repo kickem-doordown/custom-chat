@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, AfterContentInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, AfterContentInit, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -18,7 +18,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('chat', { static: false })
   chatContainer: ElementRef;
   @ViewChild('container', { static: false })
-  container: ElementRef;
+  container: ElementRef;  
 
   email: string;
   displayName: string;
@@ -30,6 +30,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   messageNum: number = 0;
   pageSize: number = 10;
   containerStyle = { "height": window.innerHeight + "px" };
+
+  nsfw: boolean = false;
 
   constructor(public mesService: MessagedbService, public auth: AuthService, public router: Router) {
     if (localStorage.getItem('user') == null) {
@@ -87,12 +89,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   sendMessage(event, buttonType) {
     if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
-      this.mesService.sendMessage({ 
-        user: buttonType === "normal" 
-          ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email) 
-          : "[anon]", 
-        value: this.messageText.nativeElement.value });
+      this.mesService.sendMessage({
+        user: buttonType === "normal"
+          ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email)
+          : "[anon]",
+        value: this.messageText.nativeElement.value,
+        nsfw: this.nsfw
+      });
       this.messageText.nativeElement.value = "";
+      
     }
     this.messageText.nativeElement.focus();
     event.stopPropagation();
