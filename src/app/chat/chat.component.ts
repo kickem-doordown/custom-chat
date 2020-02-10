@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   nsfw: boolean = false;
 
   constructor(public mesService: MessagedbService, public auth: AuthService, public router: Router) {
-    if (localStorage.getItem('user') == null) {
+    if (localStorage.getItem('user') == null || this.auth.userData == null) {
       this.router.navigate(['/loginpage']);
     } else {
 

@@ -22,6 +22,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SignupComponent } from './signup/signup.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatSlideToggleModule,
     MatIconModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
