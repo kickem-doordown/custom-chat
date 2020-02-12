@@ -23,11 +23,12 @@ export const environment = {
       appId: X,
       measurementId: X,
     },
-    messageUrl: "https://us-central1-custom-chat-915ec.cloudfunctions.net/sendMessage",
-    likeUrl: "https://us-central1-custom-chat-915ec.cloudfunctions.net/likeMessage"
+    messageUrl: X,
+    likeUrl: X
   };
 ```
 - Replace all the X's with what you get from under the custom chat settings in firebase
+- Replace URL X's with the functions under project overview > functions
 - run `firebase login` (no idea if you have to do this)
 - run `ng serve`
 
