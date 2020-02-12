@@ -16,7 +16,6 @@ body {
     flex-direction: column-reverse;
     overflow-y: scroll;
     background-color: gray;
-    border-radius: 15px;
 }
 
 .chat-input {
@@ -106,4 +105,10 @@ body {
 
  ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.fill-remaining-space {
+    /* This fills the remaining space, by using flexbox. 
+       Every toolbar row uses a flexbox row layout. */
+    flex: 1 1 auto;
 }

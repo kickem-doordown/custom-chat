@@ -14,15 +14,16 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MessageComponent } from './message/message.component';
 import { LoginpageComponent } from './loginpage/loginpage.component';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxTweetModule } from "ngx-tweet";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SignupComponent } from './signup/signup.component';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { LocationStrategy, HashLocationStrategy} from '@angular/common';
     MatSidenavModule,
     MatSlideToggleModule,
     MatIconModule,
+    MatToolbarModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],
