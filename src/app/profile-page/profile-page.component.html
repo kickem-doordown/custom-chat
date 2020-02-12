@@ -1,8 +1,19 @@
 <mat-card class="profile-wrapper">
     <mat-card-header>
-        <div mat-card-avatar class="profile-picture" style="background-image: url(auth.userData.photoURL);"></div>
+        <div mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + auth.userData.photoURL + ')' }"></div>
         <mat-card-title>{{auth.userData.displayName != null ? auth.userData.displayName : auth.userData.email}}</mat-card-title>
     </mat-card-header>
+    <mat-divider [inset]="true"></mat-divider>
+    <br>
+    <form class="edit-info" (ngSubmit)="updateInfo($event)">
+        <mat-form-field class="input-field">
+            <mat-label>Display Photo URL</mat-label>
+            <input type="url" matInput #displayURL placeholder="{{auth.userData.photoURL}}">
+            <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+        <br>
+        <button id="send" (click)="updateInfo($event)" mat-raised-button>Update Info</button>
+    </form>
     <mat-divider [inset]="true"></mat-divider>
     <br>
     <button mat-raised-button (click)="auth.SignOut()">
