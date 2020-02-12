@@ -24,6 +24,9 @@ import { SignupComponent } from './signup/signup.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -31,7 +34,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MessageComponent,
     LoginpageComponent,
     ChatComponent,
-    SignupComponent
+    SignupComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatSidenavModule,
     MatSlideToggleModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatDividerModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],

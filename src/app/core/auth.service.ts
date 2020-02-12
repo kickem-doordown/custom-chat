@@ -7,7 +7,7 @@ import { Router } from "@angular/router";
   providedIn: 'root'
 })
 export class AuthService {
-  userData: any;
+  userData: firebase.UserInfo;
   constructor(public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning

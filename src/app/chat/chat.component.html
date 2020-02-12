@@ -5,11 +5,8 @@
         Left content - to be used for multiple chats
     </mat-sidenav>
     <mat-sidenav #sidenavright mode="over" position="end">
-        Right content - to be used for profile data
-        <br>
-        <button mat-raised-button (click)="auth.SignOut()">
-            Log out
-         </button>
+
+        <app-profile-page></app-profile-page>
     </mat-sidenav>
 
     <div class="container" #container [ngStyle]="containerStyle">
