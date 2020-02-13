@@ -10,6 +10,8 @@ export class ProfilePageComponent implements OnInit {
   
   @ViewChild('displayURL', { static: false })
   displayURL: ElementRef;
+  @ViewChild('displayName', { static: false })
+  displayName: ElementRef;
 
 
   constructor(public auth: AuthService) {
@@ -19,9 +21,19 @@ export class ProfilePageComponent implements OnInit {
   }
 
   updateInfo(event) {
-    
+    let photoUrlStr = this.displayURL.nativeElement.value;
+    let photoUrl = photoUrlStr != null &&
+      photoUrlStr.replace(/\s/g, '').length > 0
+      ? photoUrlStr 
+      : this.auth.userData.photoURL;
+    let displayNameStr = this.displayName.nativeElement.value;
+    let displayName = displayNameStr != null &&
+      displayNameStr.replace(/\s/g, '').length > 0
+      ? displayNameStr
+      : this.auth.userData.displayName;
     this.auth.userData.updateProfile(
-      {photoURL: this.displayURL.nativeElement.value}
+      {photoURL: photoUrl,
+      displayName: displayName}
     )
   }
 
