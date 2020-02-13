@@ -2,7 +2,7 @@
     <div class="container">
         <div class="message">
             <span class="name">
-                <div mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + photoURL + ')' }"></div> {{messageData.user}}: 
+                <div *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + photoURL + ')' }"></div> {{messageData.user}}: 
             </span>
             <span>
                 <div class="nsfw-blur" *ngIf="nsfw" (click)="nsfw = false"><span><mat-icon>warning</mat-icon></span></div>

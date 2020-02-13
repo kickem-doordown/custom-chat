@@ -88,6 +88,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   });
 
   this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;  
+  this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
   this.updateHeart();
   }
 

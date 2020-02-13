@@ -102,6 +102,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         nsfw: this.nsfw,
         loaded: false,
         docid : Date.now() + this.auth.userData.email,
+        photoURL: buttonType === "normal" ? this.auth.userData.photoURL
+        : "",
         likeArr : []
     };
 
