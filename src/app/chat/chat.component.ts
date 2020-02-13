@@ -122,7 +122,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     if (messageObj.likeArr.includes(user)) {
       messageObj.likeArr.splice(messageObj.likeArr.indexOf(user), 1);
     } else {
-      messageObj.likeArr.unshift(user)
+      messageObj.likeArr.push(user);
     }
     if (this.messageText.nativeElement.value) {
       this.messageText.nativeElement.focus();
