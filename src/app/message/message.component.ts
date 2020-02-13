@@ -41,7 +41,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   youtubeId: string;
   imageUrl: string;
   messageText: string;
-  photoURL: string = "https://upload.wikimedia.org/wikipedia/commons/2/2c/Rotating_earth_%28large%29.gif";
+  photoURL: string;
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
