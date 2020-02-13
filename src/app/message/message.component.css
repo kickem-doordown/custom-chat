@@ -7,6 +7,14 @@
     position: relative;
 }
 
+.profile-picture {
+    background-size: contain;
+    background-position: center;
+    max-height: 2em;
+    max-width: 2em;
+    margin-right: 5px;
+}
+
 .message {
     flex: 1;
     margin: 6px;
@@ -16,6 +24,9 @@
 
 .name {
     font-weight: bold;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .timestamp {
