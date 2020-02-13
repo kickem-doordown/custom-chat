@@ -117,7 +117,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onMessageLike(messageObj) {
-    this.mesService.likeMessage(messageObj, this.auth.userData.email);
+    let user = this.auth.userData.email;
+    this.mesService.likeMessage(messageObj, user);
+    if (messageObj.likeArr.includes(user)) {
+      messageObj.likeArr.splice(messageObj.likeArr.indexOf(user), 1);
+    } else {
+      messageObj.likeArr.unshift(user)
+    }
     if (this.messageText.nativeElement.value) {
       this.messageText.nativeElement.focus();
     }

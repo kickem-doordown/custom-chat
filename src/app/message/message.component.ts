@@ -124,7 +124,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
     this.messageData.docid = this.messageDoc.id;
     this.liked.emit(this.messageData);
     this.updateHeart();
-    this.heartAnimation = !this.heartVisible ? "pulse 1s ease" : "none";
+    this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
   }
 
   updateHeart() {
