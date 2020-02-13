@@ -108,7 +108,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     };
 
     if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
-      this.mesService.sendMessage(messageObj);
+      //this.mesService.sendMessage(messageObj);
       this.mesArr.unshift(messageObj);
 
       this.messageText.nativeElement.value = "";

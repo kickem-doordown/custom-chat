@@ -25,9 +25,10 @@ export const sendMessage = functions.https.onRequest((request, response) => {
         } else {
             message.timestamp = Date.now();
             message.likeArr = [];
+            message.loaded = true;
             try {
                 await admin.firestore().collection('messages').doc(message.docid).set(message);
-                response.send({"success": true});
+                response.send({"timestamp": message.timestamp});
             }
             catch(err) {
                 response.status(500).send(err);

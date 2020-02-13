@@ -27,6 +27,8 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
 
   nsfw: boolean = false;
 
+  loaded: boolean = false;
+
   imageVisible: boolean = false;
 
   heartVisible: boolean = false;
@@ -50,11 +52,17 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   
 
   ngOnInit() {
-    if(this.messageDoc.loaded == false){
+    // if(this.messageDoc.loaded === undefined && this.messageDoc.value !== undefined){
+    //   this.messageDoc.loaded = true;  //hacky solution for backwards compat with messages without loaded
+    //   this.loaded = true;
+    // } else 
+    if(this.messageDoc.loaded === false){
       this.messageData = this.messageDoc;
+      this.sendMes();
       this.messageInit();
     } else {
       this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data => {
+        this.loaded = true;
         this.messageData = data;
         this.messageInit();
       });
@@ -119,6 +127,19 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       return match[1].trim();
     } else {
       return undefined;
+    }
+  }
+
+  sendMes(){
+    console.log("sending message: ", this.messageData);
+    if (this.messageData.value && this.messageData.value !== '') {
+      this.mesService.sendMessage(this.messageData).subscribe((resp: any) => {
+        this.messageData.loaded = true;
+        this.loaded = true;
+        this.messageData.timestamp = resp.timestamp;
+      }, err =>{
+        this.messageData.error = true;
+      });
     }
   }
 

@@ -20,7 +20,7 @@
         </span>
         <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>
     </div>
-    <div class="like-container">
+    <div class="like-container" *ngIf="loaded">
         <div (click)="likeMes()" #likeContainer [ngStyle]="{'background-color': heartColor}">
             <a *ngIf="messageData.likeArr" href="#">
                 <svg class="heart" viewBox="0 0 32 29.6" [ngStyle]="{'transform': heartScale}">
@@ -30,6 +30,10 @@
                 </svg>
             </a>
         </div>
+    </div>
+
+    <div class="like-container" *ngIf="!loaded">
+        spinning...
     </div>
 </div>
 

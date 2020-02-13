@@ -28,12 +28,7 @@ export class MessagedbService {
   sendMessage(mes: any){
     //let docid = mes.user + Date.now();
     let req = {"messageObj": mes};
-    this.http.post(environment.messageUrl, req).pipe(first()).subscribe(resp => {
-      console.log("sendMessage response: ", resp);
-    }, (err) => {
-      console.error("sendMessage error: ", err);
-    });
-
+    return this.http.post(environment.messageUrl, req).pipe(first());
     // mes["likeArr"] = [];
     // mes["timestamp"] = Date.now();
     // this.db.collection('messages').add(mes);
