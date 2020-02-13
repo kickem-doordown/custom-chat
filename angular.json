@@ -21,13 +21,17 @@
             "aot": false,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./custom-chat-app/platforms/browser/platform_www/cordova.js"
+
+            ]
           },
           "configurations": {
             "production": {

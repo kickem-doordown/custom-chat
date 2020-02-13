@@ -9,7 +9,8 @@
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "./node_modules/angular-cordova/**/*"
   ],
   "exclude": [
     "src/test.ts",

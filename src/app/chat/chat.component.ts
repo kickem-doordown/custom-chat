@@ -4,11 +4,16 @@ import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { GeolocationService } from 'angular-cordova/plugin/geolocation';
+import { NotificationsService } from '../notifications.service';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+   providers: [
+     GeolocationService
+   ]
 })
 export class ChatComponent implements OnInit, OnDestroy, AfterViewInit{
   
@@ -29,11 +34,11 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit{
   pageSize: number = 10;
   containerStyle = {"height": window.innerHeight + "px"};
 
-  constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router) {
+  constructor(public mesService: MessagedbService, public auth: AngularFireAuth, public router: Router, public geo: GeolocationService, public notif: NotificationsService) {
     if(this.auth.auth.currentUser === null){
       this.router.navigate(['/loginpage']);
     } else {
-      
+
       this.email = this.auth.auth.currentUser.email;
       this.messages = mesService.getRecentMessages(this.pageSize);
       this.messageNum = this.pageSize;
@@ -53,6 +58,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit{
         }
       });
     }
+
+    //geo.getCurrentPosition().subscribe(location => {console.log(location)});
   }
 
   ngOnInit(){
