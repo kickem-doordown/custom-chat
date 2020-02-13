@@ -10,8 +10,8 @@
 .profile-picture {
     background-size: contain;
     background-position: center;
-    max-height: 2em;
-    max-width: 2em;
+    max-height: 3em;
+    max-width: 3em;
     margin-right: 5px;
 }
 
