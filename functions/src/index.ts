@@ -18,20 +18,19 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 export const sendMessage = functions.https.onRequest((request, response) => {
     cors(request, response, async () => {
         const message = request.body.messageObj;
-        const docid = request.body.docid;
         console.log(message);
 
-        if(!message.value || !message.user || !docid){
-            response.status(500).send({"error": true});
+        if(!message.value || !message.user || !message.docid){
+            response.status(500).send({"error": "missing values"});
         } else {
             message.timestamp = Date.now();
             message.likeArr = [];
             try {
-                await admin.firestore().collection('messages').doc(docid).set(message);
+                await admin.firestore().collection('messages').doc(message.docid).set(message);
                 response.send({"success": true});
             }
-            catch {
-                response.status(500).send({"error": true});
+            catch(err) {
+                response.status(500).send(err);
             }
         }
     });

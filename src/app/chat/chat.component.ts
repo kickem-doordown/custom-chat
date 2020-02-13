@@ -51,8 +51,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
         if (data[0].type === 'added') {
           console.log("new message: " + data[0].payload.doc.id);
-          this.mesArr.unshift(data[0].payload.doc);
-          this.messageNum++;
+          let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
+          if(mesIndex != -1){
+            this.mesArr[mesIndex].loaded = true;
+          } else {
+            this.mesArr.unshift(data[0].payload.doc);
+            this.messageNum++;
+          }
         }
       });
     }
@@ -88,14 +93,22 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendMessage(event, buttonType) {
-    if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
-      this.mesService.sendMessage({
-        user: buttonType === "normal"
-          ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email)
-          : "[anon]",
+
+    let messageObj = {
+      user: buttonType === "normal"
+        ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email)
+        : "[anon]",
         value: this.messageText.nativeElement.value,
-        nsfw: this.nsfw
-      });
+        nsfw: this.nsfw,
+        loaded: false,
+        docid : Date.now() + this.auth.userData.email,
+        likeArr : []
+    };
+
+    if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
+      this.mesService.sendMessage(messageObj);
+      this.mesArr.unshift(messageObj);
+
       this.messageText.nativeElement.value = "";
       
     }

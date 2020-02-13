@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild, AfterViewInit, SecurityContext } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy, ElementRef, ViewChild, AfterViewInit, SecurityContext, OnChanges } from '@angular/core';
 import { MessagedbService } from '../messagedb.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
@@ -13,7 +13,7 @@ import { AuthService } from '../core/auth.service';
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css']
 })
-export class MessageComponent implements OnInit, OnDestroy {
+export class MessageComponent implements OnInit, OnDestroy, OnChanges {
 
   @ViewChild('likeContainer', { static: false })
   likeContainer: ElementRef;
@@ -49,40 +49,45 @@ export class MessageComponent implements OnInit, OnDestroy {
   
 
   ngOnInit() {
-    this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data => {
-      this.messageData = data;
-
-      let words = this.messageData.value.split(" ");
-
-      for(let i = 0; i < words.length; i++){
-        //url check
-        this.url_parser(words[i]);
-        
-        //image check
-        if (words[i].match(/\.(jpeg|jpg|gif|png)$/) != null) {
-          this.imageUrl = words[i];
-        }
-
-        //youtube check
-        let yt = this.youtube_parser(words[i]);
-        if(yt)
-          this.youtubeId = yt;
-        
-        //twitter check
-        let t = this.twitter_parser(words[i]);
-        if(t)
-          this.tweetId = t; 
-      }
-      this.messageText = Autolinker.link(
-        _.escape(this.messageData.value), {
-        mention: 'twitter',
-        truncate: {length: 32}
+    if(this.messageDoc.loaded == false){
+      this.messageData = this.messageDoc;
+      this.messageInit();
+    } else {
+      this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data => {
+        this.messageData = data;
+        this.messageInit();
       });
+    }
+  }
 
-      this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;
-      
-      this.updateHeart();
-    });
+  messageInit(){
+  let words = this.messageData.value.split(" ");
+
+  for(let i = 0; i < words.length; i++){
+    //url check
+    this.url_parser(words[i]);
+    //image check
+    if (words[i].match(/\.(jpeg|jpg|gif|png)$/) != null) {
+      this.imageUrl = words[i];
+    }
+    //youtube check
+    let yt = this.youtube_parser(words[i]);
+    if(yt)
+      this.youtubeId = yt;
+    //twitter check
+    let t = this.twitter_parser(words[i]);
+    if(t)
+      this.tweetId = t; 
+  }
+
+  this.messageText = Autolinker.link(
+    _.escape(this.messageData.value), {
+    mention: 'twitter',
+    truncate: {length: 32}
+  });
+
+  this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;  
+  this.updateHeart();
   }
 
   url_parser(url){
@@ -135,6 +140,10 @@ export class MessageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.messageSub.unsubscribe();
+  }
+
+  ngOnChanges(){
+    console.log(this.messageDoc)
   }
 
 }
