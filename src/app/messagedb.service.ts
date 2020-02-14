@@ -36,7 +36,7 @@ export class MessagedbService {
 
   likeMessage(messageObj: any, user: string){
     let req = {"messageObj": messageObj, "user": user};
-    this.http.post(environment.likeUrl, req).pipe(first()).subscribe(resp => {console.log(resp)});
+    return this.http.post(environment.likeUrl, req).pipe(first());
 
     // if(messageObj.likeArr.includes(user)) {
     //   this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});

@@ -29,7 +29,7 @@
         </mat-toolbar>
         <div class="chat-body" #chat>
             <div *ngFor="let m of mesArr">
-                <app-message (liked)="onMessageLike($event)" [messageDoc]="m"></app-message>
+                <app-message [messageDoc]="m"></app-message>
             </div>
         </div>
 

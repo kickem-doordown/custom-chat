@@ -96,46 +96,45 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendMessage(event, buttonType) {
+    let username =  buttonType === "normal"
+    ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email)
+    : "[anon]";
+
 
     let messageObj = {
-      user: buttonType === "normal"
-        ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email)
-        : "[anon]",
-        value: this.messageText.nativeElement.value,
-        nsfw: this.nsfw,
-        loaded: false,
-        docid : Date.now() + this.auth.userData.email,
-        photoURL: buttonType === "normal" ? this.auth.userData.photoURL
-        : "",
-        likeArr : [],
-        timestamp : Date.now()
+      user: username,
+      value: this.messageText.nativeElement.value,
+      nsfw: this.nsfw,
+      loaded: false,
+      docid : Date.now() + this.auth.userData.email,
+      photoURL: buttonType === "normal" ? this.auth.userData.photoURL : "",
+      likeArr : [],
+      timestamp : Date.now()
     };
 
-    if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
-      //this.mesService.sendMessage(messageObj);
+    if (messageObj.value && messageObj.value !== '') {
       this.scrollCheck();
       this.mesArr.unshift(messageObj);
       this.scrollToBottom();
 
       this.messageText.nativeElement.value = "";
-      
     }
     this.messageText.nativeElement.focus();
     event.stopPropagation();
   }
 
-  onMessageLike(messageObj) {
-    let user = this.auth.userData.email;
-    this.mesService.likeMessage(messageObj, user);
-    if (messageObj.likeArr.includes(user)) {
-      messageObj.likeArr.splice(messageObj.likeArr.indexOf(user), 1);
-    } else {
-      messageObj.likeArr.push(user);
-    }
-    if (this.messageText.nativeElement.value) {
-      this.messageText.nativeElement.focus();
-    }
-  }
+  // onMessageLike(messageObj) {
+  //   let user = this.auth.userData.email;
+  //   this.mesService.likeMessage(messageObj, user);
+  //   if (messageObj.likeArr.includes(user)) {
+  //     messageObj.likeArr.splice(messageObj.likeArr.indexOf(user), 1);
+  //   } else {
+  //     messageObj.likeArr.push(user);
+  //   }
+  //   if (this.messageText.nativeElement.value) {
+  //     this.messageText.nativeElement.focus();
+  //   }
+  // }
 
   scrollToBottom() {
     setTimeout(()=>{

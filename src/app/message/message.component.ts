@@ -45,6 +45,8 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   messageText: string;
   photoURL: string;
 
+  canLike = true;
+
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
   constructor(public mesService: MessagedbService, 
@@ -144,10 +146,25 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   likeMes() {
-    this.messageData.docid = this.messageDoc.id;
-    this.liked.emit(this.messageData);
-    this.updateHeart();
-    this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
+    if(this.canLike){
+      this.canLike = false;
+      let user = this.authService.userData.email;
+      this.mesService.likeMessage(this.messageData, user).subscribe(resp =>{
+        this.canLike = true;
+      }, err => {
+        this.canLike = true;
+      });
+
+      if (this.messageData.likeArr.includes(user)) {
+      this.messageData.likeArr.splice(this.messageData.likeArr.indexOf(user), 1);
+      } else {
+      this.messageData.likeArr.push(user);
+      }
+
+
+      this.updateHeart();
+      this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
+    }
   }
 
   updateHeart() {
