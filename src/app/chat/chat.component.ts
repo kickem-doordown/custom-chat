@@ -30,6 +30,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   messageNum: number = 0;
   pageSize: number = 10;
   containerStyle = { "height": window.innerHeight + "px" };
+  isScrolledToBottom: boolean = true;
 
   nsfw: boolean = false;
 
@@ -55,8 +56,10 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           if(mesIndex != -1){
             this.mesArr[mesIndex].loaded = true;
           } else {
+            this.scrollCheck();
             this.mesArr.unshift(data[0].payload.doc);
             this.messageNum++;
+            this.scrollToBottom();
           }
         }
       });
@@ -104,12 +107,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
         docid : Date.now() + this.auth.userData.email,
         photoURL: buttonType === "normal" ? this.auth.userData.photoURL
         : "",
-        likeArr : []
+        likeArr : [],
+        timestamp : Date.now()
     };
 
     if (this.messageText.nativeElement.value && this.messageText.nativeElement.value !== '') {
       //this.mesService.sendMessage(messageObj);
+      this.scrollCheck();
       this.mesArr.unshift(messageObj);
+      this.scrollToBottom();
 
       this.messageText.nativeElement.value = "";
       
@@ -132,9 +138,27 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   scrollToBottom() {
-    try {
-      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+    setTimeout(()=>{
+      try {
+        let elem = this.chatContainer.nativeElement;
+        if(this.isScrolledToBottom){
+          console.log("scroll");
+          elem.scrollTop = elem.scrollHeight;
+          console.log(elem.scrollTop);
+        }
+      } catch (err) { 
+        console.error(err);
+      }
+    }, 10);
+  }
+
+  scrollCheck(){
+    try{
+      let elem = this.chatContainer.nativeElement;
+      this.isScrolledToBottom = elem.scrollHeight - elem.clientHeight <= elem.scrollTop + 1;
+    } catch (err){
+      console.error(err)
+    }
   }
 
 }
