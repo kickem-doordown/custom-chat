@@ -131,7 +131,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
 
   updateHeart() {
     this.heartVisible = this.messageData.likeArr.includes(this.authService.userData.email);
-    this.heartColor = this.heartVisible ? "transparent" : "hotpink";
+    this.heartColor = this.heartVisible ? "red" : "lightgrey";
     var minSize = 5;
     var numLikes = Math.max(minSize, this.messageData.likeArr.length + minSize);
     var scale = .125;
