@@ -25,8 +25,10 @@
 .name {
     font-weight: bold;
     display: inline-flex;
-    justify-content: center;
     align-items: center;
+    justify-content: start;
+    width: 100%;
+    min-width: 0;
 }
 
 .timestamp {

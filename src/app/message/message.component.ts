@@ -26,6 +26,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   messageData: any;
 
   nsfw: boolean = false;
+  nsfwVisible: boolean = false;
 
   loaded: boolean = false;
 
@@ -98,6 +99,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   });
 
   this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;  
+  this.nsfwVisible = this.nsfw;
   this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
   this.updateHeart();
   }

@@ -2,10 +2,13 @@
     <div class="container">
         <div class="message">
             <span class="name">
-                <div *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + photoURL + ')' }"></div> {{messageData.user}}: 
+                <div *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + photoURL + ')' }"></div> 
+                <span style="max-width:80%; word-wrap:break-word; word-break: break-all;">{{messageData.user}}: </span>
+            <span style="flex: 1 1 auto"></span>
+            <button *ngIf="nsfw" mat-icon-button (click)="nsfwVisible = true"><mat-icon>warning</mat-icon></button>
             </span>
             <span>
-                <div class="nsfw-blur" *ngIf="nsfw" (click)="nsfw = false"><span><mat-icon>warning</mat-icon></span></div>
+                <div class="nsfw-blur" *ngIf="nsfwVisible" (click)="nsfwVisible = false"><span><mat-icon>warning</mat-icon></span></div>
         <br> <span [innerHtml]="messageText"> </span>
         <br>
         <div class="image-wrapper" *ngIf="imageUrl">
@@ -18,7 +21,7 @@
             <youtube-player [width]="200" [height]="100" [videoId]="youtubeId"></youtube-player>
         </div>
         </span>
-        <span class="timestamp">{{messageData.timestamp | date:'medium'}}</span>
+        <span class="timestamp">{{messageData.timestamp | date:'medium'}} </span>
     </div>
     <div class="like-container" *ngIf="loaded">
         <div (click)="likeMes()" #likeContainer>
