@@ -26,7 +26,7 @@
     font-weight: bold;
     display: inline-flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     width: 100%;
     min-width: 0;
 }
