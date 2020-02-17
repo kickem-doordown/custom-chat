@@ -5,7 +5,9 @@
                 <div *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + photoURL + ')' }"></div> 
                 <span style="max-width:80%; word-wrap:break-word; word-break: break-all;">{{messageData.user}}: </span>
             <span style="flex: 1 1 auto"></span>
-            <button *ngIf="nsfw" mat-icon-button (click)="nsfwVisible = true"><mat-icon>warning</mat-icon></button>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
             </span>
             <span>
                 <div class="nsfw-blur" *ngIf="nsfwVisible" (click)="nsfwVisible = false"><span><mat-icon>warning</mat-icon></span></div>
@@ -54,3 +56,11 @@
         </div>
     </div>
 </ng-template>
+
+<!--Message Option Menu-->
+<mat-menu #menu="matMenu">
+    <button *ngIf="nsfw" mat-menu-item (click)="nsfwVisible = true">
+        <mat-icon>warning</mat-icon>
+        <span>Re-NSFW</span>
+    </button>
+</mat-menu>

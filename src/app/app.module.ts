@@ -27,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatToolbarModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatMenuModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],
