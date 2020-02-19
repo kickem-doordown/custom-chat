@@ -3,12 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginpageComponent } from './loginpage/loginpage.component';
 import { ChatComponent } from './chat/chat.component';
 import { SignupComponent } from './signup/signup.component';
+import { MultiChatComponent } from './multi-chat-container/multi-chat.component';
 
 
 const routes: Routes = [
   { path: 'loginpage', component: LoginpageComponent },
   { path: 'signup', component: SignupComponent},
-  { path: '', component: ChatComponent }
+  { path: '', component: MultiChatComponent }
 ];
 
 @NgModule({

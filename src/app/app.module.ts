@@ -28,6 +28,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
+import { MultiChatComponent } from './multi-chat-container/multi-chat.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatMenuModule} from '@angular/material/menu';
     LoginpageComponent,
     ChatComponent,
     SignupComponent,
-    ProfilePageComponent
+    ProfilePageComponent,
+    MultiChatComponent
   ],
   imports: [
     BrowserModule,

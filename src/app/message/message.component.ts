@@ -21,6 +21,9 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   @Input()
   messageDoc: any;
 
+  @Input()
+  chatID: string;
+
   messageSub: Subscription;
 
   messageData: any;
@@ -64,7 +67,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       this.sendMes();
       this.messageInit();
     } else {
-      this.messageSub = this.mesService.getMessageData(this.messageDoc.id).subscribe(data => {
+      this.messageSub = this.mesService.getMessageData(this.chatID, this.messageDoc.id).subscribe(data => {
         this.loaded = true;
         this.messageData = data;
         this.messageInit();
@@ -137,7 +140,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   sendMes(){
     console.log("sending message: ", this.messageData);
     if (this.messageData.value && this.messageData.value !== '') {
-      this.mesService.sendMessage(this.messageData).subscribe((resp: any) => {
+      this.mesService.sendMessage(this.chatID, this.messageData).subscribe((resp: any) => {
         this.messageData.loaded = true;
         this.loaded = true;
         this.messageData.timestamp = resp.timestamp;
@@ -151,7 +154,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
     if(this.canLike){
       this.canLike = false;
       let user = this.authService.userData.email;
-      this.mesService.likeMessage(this.messageData, user).subscribe(resp =>{
+      this.mesService.likeMessage(this.chatID, this.messageData, user).subscribe(resp =>{
         this.canLike = true;
       }, err => {
         this.canLike = true;
@@ -167,6 +170,15 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       this.updateHeart();
       this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
     }
+  }
+
+  messageStyle(){
+    if(this.messageData){
+      if(this.messageData.uid === this.authService.userData.uid){
+        return {"background-color": "#e6faff"};
+      }
+    }
+    return {};
   }
 
   updateHeart() {

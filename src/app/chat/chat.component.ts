@@ -20,8 +20,13 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('container', { static: false })
   container: ElementRef;  
 
-  email: string;
-  displayName: string;
+
+  @Input()
+  chatID: string = '';
+
+  @Input()
+  chatName: string = '';
+
   messages: Observable<any>;
   mesArr: any[] = [];
   mesSub: Subscription;
@@ -37,36 +42,35 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(public mesService: MessagedbService, public auth: AuthService, public router: Router) {
     if (localStorage.getItem('user') == null || this.auth.userData == null) {
       this.router.navigate(['/loginpage']);
-    } else {
-
-      this.messages = mesService.getRecentMessages(this.pageSize);
-      this.messageNum = this.pageSize;
-
-      this.messages.pipe(take(1)).subscribe(data => {
-        console.log(data);
-        this.mesArr = data.docs;
-      });
-
-      this.mesSub = mesService.getMessageUpdates().subscribe(data => {
-        console.log(data);
-
-        if (data[0].type === 'added') {
-          console.log("new message: " + data[0].payload.doc.id);
-          let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
-          if(mesIndex != -1){
-            this.mesArr[mesIndex].loaded = true;
-          } else {
-            this.scrollCheck();
-            this.mesArr.unshift(data[0].payload.doc);
-            this.messageNum++;
-            this.scrollToBottom();
-          }
-        }
-      });
-    }
+    } 
   }
 
   ngOnInit() {
+    this.messages = this.mesService.getRecentMessages(this.chatID, this.pageSize);
+    this.messageNum = this.pageSize;
+
+    this.messages.pipe(take(1)).subscribe(data => {
+      console.log(data);
+      this.mesArr = data.docs;
+    });
+
+    this.mesSub = this.mesService.getMessageUpdates(this.chatID).subscribe(data => {
+      console.log(data);
+
+      if (data[0].type === 'added') {
+        console.log("new message: " + data[0].payload.doc.id);
+        let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
+        if(mesIndex != -1){
+          this.mesArr[mesIndex].loaded = true;
+        } else {
+          this.scrollCheck();
+          this.mesArr.unshift(data[0].payload.doc);
+          this.messageNum++;
+          this.scrollToBottom();
+        }
+      }
+    });
+
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.body.appendChild(tag);
@@ -81,7 +85,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.chatContainer.nativeElement.scrollTop == 0 && this.mesArr.length == this.messageNum) {
         this.messageNum += this.pageSize;
-        this.mesService.getPageAfter(this.pageSize, this.mesArr[this.mesArr.length - 1]).subscribe((data) => {
+        this.mesService.getPageAfter(this.chatID, this.pageSize, this.mesArr[this.mesArr.length - 1]).subscribe((data) => {
           console.log(this.messageNum);
           this.mesArr = this.mesArr.concat(data.docs);
         });
@@ -102,11 +106,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
     let messageObj = {
-      user: username,
+      docid : Date.now() + this.auth.userData.uid,
+      uid : this.auth.userData.uid,
+      displayName: username,
       value: this.messageText.nativeElement.value,
       nsfw: this.nsfw,
       loaded: false,
-      docid : Date.now() + this.auth.userData.email,
       photoURL: buttonType === "normal" ? this.auth.userData.photoURL : "",
       likeArr : [],
       timestamp : Date.now()

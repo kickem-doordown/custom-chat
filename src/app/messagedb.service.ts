@@ -13,29 +13,29 @@ export class MessagedbService {
 
   constructor(public db: AngularFirestore, public http: HttpClient) { }
 
-  getRecentMessages(num: number){
-    return this.db.collection('messages', ref => ref.orderBy("timestamp", "desc").limit(num)).get().pipe(first());
+  getRecentMessages(chatID: string, num: number){
+    return this.db.collection('chat').doc(chatID).collection('messages', ref => ref.orderBy("timestamp", "desc").limit(num)).get().pipe(first());
   }
 
-  getPageAfter(limit: number, startDoc: any){
-    return this.db.collection('messages', ref => ref.orderBy("timestamp", "desc").startAfter(startDoc).limit(limit)).get().pipe(first());
+  getPageAfter(chatID: string, limit: number, startDoc: any){
+    return this.db.collection('chat').doc(chatID).collection('messages', ref => ref.orderBy("timestamp", "desc").startAfter(startDoc).limit(limit)).get().pipe(first());
   }
 
-  getMessageUpdates(){
-    return this.db.collection('messages', ref => ref.orderBy("timestamp", "desc").limit(1)).snapshotChanges().pipe(skip(1));
+  getMessageUpdates(chatID: string){
+    return this.db.collection('chat').doc(chatID).collection('messages', ref => ref.orderBy("timestamp", "desc").limit(1)).snapshotChanges().pipe(skip(1));
   }
 
-  sendMessage(mes: any){
+  sendMessage(chatID: string, mes: any){
     //let docid = mes.user + Date.now();
-    let req = {"messageObj": mes};
+    let req = {"messageObj": mes, "chatID": chatID};
     return this.http.post(environment.messageUrl, req).pipe(first());
     // mes["likeArr"] = [];
     // mes["timestamp"] = Date.now();
     // this.db.collection('messages').add(mes);
   }
 
-  likeMessage(messageObj: any, user: string){
-    let req = {"messageObj": messageObj, "user": user};
+  likeMessage(chatID: string, messageObj: any, user: string){
+    let req = {"messageObj": messageObj, "user": user, "chatID": chatID};
     return this.http.post(environment.likeUrl, req).pipe(first());
 
     // if(messageObj.likeArr.includes(user)) {
@@ -45,8 +45,8 @@ export class MessagedbService {
     // }
   }
   
-  getMessageData(doc: any){
-    return this.db.collection('messages').doc(doc).valueChanges();
+  getMessageData(chatID: string, doc: any){
+    return this.db.collection('chat').doc(chatID).collection('messages').doc(doc).valueChanges();
   }
 
   // getObservable(num: number){
