@@ -140,13 +140,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   sendMes(){
     console.log("sending message: ", this.messageData);
     if (this.messageData.value && this.messageData.value !== '') {
-      this.mesService.sendMessage(this.chatID, this.messageData).subscribe((resp: any) => {
-        this.messageData.loaded = true;
-        this.loaded = true;
-        this.messageData.timestamp = resp.timestamp;
-      }, err =>{
-        this.messageData.error = true;
-      });
+      this.mesService.sendMessage(this.chatID, this.messageData);
     }
   }
 
