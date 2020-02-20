@@ -10,6 +10,10 @@ body {
     background-color: lightgray;
 }
 
+.sidenav {
+    max-width: 90%
+}
+
 .chat-body {
     flex: 1 1 100vh;
     display: flex;
