@@ -146,7 +146,12 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
 
   likeMes() {
     let user = this.authService.userData.email;
-    this.mesService.likeMessage(this.chatID, this.messageData, user);
+    this.mesService.likeMessage(this.chatID, this.messageData, user).then(
+      nil => {
+        this.updateHeart();
+        this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
+      }
+    );
 
     /*if (this.messageData.likeArr.includes(user)) {
     this.messageData.likeArr.splice(this.messageData.likeArr.indexOf(user), 1);
@@ -154,9 +159,6 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
     this.messageData.likeArr.push(user);
     }*/
 
-
-    this.updateHeart();
-    this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
 
   }
 
