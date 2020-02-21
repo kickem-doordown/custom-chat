@@ -4,7 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { DatePipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import Autolinker from 'autolinker';
-import { DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 import { AuthService } from '../core/auth.service';
 
@@ -42,7 +42,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   heartAnimation: string = "none";
   heartScale: string = "scale(1)";
   heartTextScale: string = "1";
-  
+
   tweetId: string;
   youtubeId: string;
   imageUrl: string;
@@ -53,16 +53,16 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
 
   @Output() liked: EventEmitter<any> = new EventEmitter();
 
-  constructor(public mesService: MessagedbService, 
-              public authService: AuthService) {}
-  
+  constructor(public mesService: MessagedbService,
+    public authService: AuthService) { }
+
 
   ngOnInit() {
     // if(this.messageDoc.loaded === undefined && this.messageDoc.value !== undefined){
     //   this.messageDoc.loaded = true;  //hacky solution for backwards compat with messages without loaded
     //   this.loaded = true;
     // } else 
-    if(this.messageDoc.loaded === false){
+    if (this.messageDoc.loaded === false) {
       this.messageData = this.messageDoc;
       this.sendMes();
       this.messageInit();
@@ -75,107 +75,97 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  messageInit(){
-  let words = this.messageData.value.split(" ");
+  messageInit() {
+    let words = this.messageData.value.split(" ");
 
-  for(let i = 0; i < words.length; i++){
-    //url check
-    this.url_parser(words[i]);
-    //image check
-    if (words[i].match(/\.(jpeg|jpg|gif|png)$/) != null) {
-      this.imageUrl = words[i];
+    for (let i = 0; i < words.length; i++) {
+      //url check
+      this.url_parser(words[i]);
+      //image check
+      if (words[i].match(/\.(jpeg|jpg|gif|png)$/) != null) {
+        this.imageUrl = words[i];
+      }
+      //youtube check
+      let yt = this.youtube_parser(words[i]);
+      if (yt)
+        this.youtubeId = yt;
+      //twitter check
+      let t = this.twitter_parser(words[i]);
+      if (t)
+        this.tweetId = t;
     }
-    //youtube check
-    let yt = this.youtube_parser(words[i]);
-    if(yt)
-      this.youtubeId = yt;
-    //twitter check
-    let t = this.twitter_parser(words[i]);
-    if(t)
-      this.tweetId = t; 
+
+    this.messageText = Autolinker.link(
+      _.escape(this.messageData.value), {
+      mention: 'twitter',
+      truncate: { length: 32 }
+    });
+
+    this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;
+    this.nsfwVisible = this.nsfw;
+    this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
+    this.updateHeart();
   }
 
-  this.messageText = Autolinker.link(
-    _.escape(this.messageData.value), {
-    mention: 'twitter',
-    truncate: {length: 32}
-  });
-
-  this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;  
-  this.nsfwVisible = this.nsfw;
-  this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
-  this.updateHeart();
-  }
-
-  url_parser(url){
+  url_parser(url) {
     var regExp = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
-    
+
     var match = url.match(regExp);
-    if(match) {
+    if (match) {
       return match[0];
     } else {
       return undefined;
     }
   }
 
-  youtube_parser(url){
+  youtube_parser(url) {
     var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
     var match = url.match(regExp);
-    if(match && match[7]){
+    if (match && match[7]) {
       return match[7];
     } else {
       return undefined;
     }
   }
 
-  twitter_parser(url){
+  twitter_parser(url) {
     var match = url.match(/.*twitter.com\/.*\/status\/([0-9]+)/);
-    if(match && match[1]) {
+    if (match && match[1]) {
       return match[1].trim();
     } else {
       return undefined;
     }
   }
 
-  sendMes(){
+  sendMes() {
     console.log("sending message: ", this.messageData);
     if (this.messageData.value && this.messageData.value !== '') {
-      this.mesService.sendMessage(this.chatID, this.messageData).subscribe((resp: any) => {
-        this.messageData.loaded = true;
-        this.loaded = true;
-        this.messageData.timestamp = resp.timestamp;
-      }, err =>{
-        this.messageData.error = true;
-      });
+      this.mesService.sendMessage(this.chatID, this.messageData);
     }
   }
 
   likeMes() {
-    if(this.canLike){
-      this.canLike = false;
-      let user = this.authService.userData.email;
-      this.mesService.likeMessage(this.chatID, this.messageData, user).subscribe(resp =>{
-        this.canLike = true;
-      }, err => {
-        this.canLike = true;
-      });
-
-      if (this.messageData.likeArr.includes(user)) {
-      this.messageData.likeArr.splice(this.messageData.likeArr.indexOf(user), 1);
-      } else {
-      this.messageData.likeArr.push(user);
+    let user = this.authService.userData.email;
+    this.mesService.likeMessage(this.chatID, this.messageData, user).then(
+      nil => {
+        this.updateHeart();
+        this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
       }
+    );
+
+    /*if (this.messageData.likeArr.includes(user)) {
+    this.messageData.likeArr.splice(this.messageData.likeArr.indexOf(user), 1);
+    } else {
+    this.messageData.likeArr.push(user);
+    }*/
 
 
-      this.updateHeart();
-      this.heartAnimation = this.heartVisible ? "pulse 1s ease" : "none";
-    }
   }
 
-  messageStyle(){
-    if(this.messageData){
-      if(this.messageData.uid === this.authService.userData.uid){
-        return {"background-color": "#e6faff"};
+  messageStyle() {
+    if (this.messageData) {
+      if (this.messageData.uid === this.authService.userData.uid) {
+        return { "background-color": "#e6faff" };
       }
     }
     return {};
@@ -187,16 +177,16 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
     var minSize = 5;
     var numLikes = Math.max(minSize, this.messageData.likeArr.length + minSize);
     var scale = .125;
-    this.heartScale = "scale(" + numLikes*scale + ")";
+    this.heartScale = "scale(" + numLikes * scale + ")";
     var unscaledTextSize = 16;
-    this.heartTextScale = (16*1/(scale*numLikes)) + "px";
+    this.heartTextScale = (16 * 1 / (scale * numLikes)) + "px";
   }
 
   ngOnDestroy() {
     this.messageSub.unsubscribe();
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     console.log(this.messageDoc)
   }
 

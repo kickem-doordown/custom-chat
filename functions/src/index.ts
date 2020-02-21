@@ -1,19 +1,18 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 admin.initializeApp();
-const cors = require('cors')({origin: true});
+const cors = require('cors')({ origin: true });
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
 
 export const helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase!");
+    response.send("Hello from Firebase!");
 });
 
-// export const initMessage = functions.firestore.document('messages/{docid}').onCreate(doc => {
-//     const currentTime = Date.now();
-//     return admin.firestore().doc('messages/'+doc.id).update({'timestamp': currentTime, 'likeArr': []});
-// });
+/*export const initMessage = functions.firestore.document('{chatID}/chat1/messages/{docid}').onCreate(doc => {
+    return admin.firestore().doc('{chatID}/chat1/messages/' + doc.id).update({ 'timestamp': admin.firestore.Timestamp, 'likeArr': [] });
+});*/
 
 export const sendMessage = functions.https.onRequest((request, response) => {
     cors(request, response, async () => {
@@ -21,17 +20,17 @@ export const sendMessage = functions.https.onRequest((request, response) => {
         const chatID = request.body.chatID;
         console.log(message);
 
-        if(!message.value || !message.uid || !message.docid || !chatID){
-            response.status(500).send({"error": "missing values: "});
+        if (!message.value || !message.uid || !message.docid || !chatID) {
+            response.status(500).send({ "error": "missing values: " });
         } else {
             message.timestamp = Date.now();
             message.likeArr = [];
             message.loaded = true;
             try {
                 await admin.firestore().collection('chat').doc(chatID).collection('messages').doc(message.docid).set(message);
-                response.send({"timestamp": message.timestamp});
+                response.send({ "timestamp": message.timestamp });
             }
-            catch(err) {
+            catch (err) {
                 response.status(500).send(err);
             }
         }
@@ -44,20 +43,20 @@ export const likeMessage = functions.https.onRequest((request, response) => {
         const user = request.body.user;
         const chatID = request.body.chatID;
 
-        if(!messageObj || !user || !chatID){
-            response.status(500).send({"error": "Insufficient data: User: " + user + " message: " + messageObj + " chatID: " + chatID});
+        if (!messageObj || !user || !chatID) {
+            response.status(500).send({ "error": "Insufficient data: User: " + user + " message: " + messageObj + " chatID: " + chatID });
         } else {
             try {
                 let doc;
-                if(messageObj.likeArr.includes(user)) {
-                    doc = await admin.firestore().collection('chat').doc(chatID).collection('messages').doc(messageObj.docid).update({"likeArr": admin.firestore.FieldValue.arrayRemove(user)});
+                if (messageObj.likeArr.includes(user)) {
+                    doc = await admin.firestore().collection('chat').doc(chatID).collection('messages').doc(messageObj.docid).update({ "likeArr": admin.firestore.FieldValue.arrayRemove(user) });
                 } else {
-                    doc = await admin.firestore().collection('chat').doc(chatID).collection('messages').doc(messageObj.docid).update({"likeArr": admin.firestore.FieldValue.arrayUnion(user)});
+                    doc = await admin.firestore().collection('chat').doc(chatID).collection('messages').doc(messageObj.docid).update({ "likeArr": admin.firestore.FieldValue.arrayUnion(user) });
                 }
-                response.send({"success": doc.writeTime});
+                response.send({ "success": doc.writeTime });
             }
             catch {
-                response.status(500).send({"error": "firebase error"});
+                response.status(500).send({ "error": "firebase error" });
             }
         }
     });

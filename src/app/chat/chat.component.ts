@@ -118,9 +118,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     };
 
     if (messageObj.value && messageObj.value !== '') {
-      this.scrollCheck();
-      this.mesArr.unshift(messageObj);
-      this.scrollToBottom();
+      this.mesService.sendMessage("chat1", messageObj);
 
       this.messageText.nativeElement.value = "";
     }
