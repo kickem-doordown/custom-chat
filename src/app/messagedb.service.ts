@@ -29,18 +29,15 @@ export class MessagedbService {
     mes["likeArr"] = [];
     mes["timestamp"] = firebase.firestore.Timestamp.now();
     // TODO multiple chats needs to not be hardcoded
-    this.db.collection('chat').doc('chat1').collection('messages').add(mes);
+    this.db.collection('chat').doc('chat1').collection('messages').doc(mes.docid).set(mes);
   }
 
   likeMessage(chatID: string, messageObj: any, user: string){
-    let req = {"messageObj": messageObj, "user": user, "chatID": chatID};
-    return this.http.post(environment.likeUrl, req).pipe(first());
-
-    // if(messageObj.likeArr.includes(user)) {
-    //   this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});
-    // } else {
-    //   this.db.collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayUnion(user)});
-    // }
+    if(messageObj.likeArr.includes(user)) {
+     this.db.collection('chat').doc('chat1').collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});
+    } else {
+       this.db.collection('chat').doc('chat1').collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayUnion(user)});
+    }
   }
   
   getMessageData(chatID: string, doc: any){

@@ -10,9 +10,9 @@ export const helloWorld = functions.https.onRequest((request, response) => {
     response.send("Hello from Firebase!");
 });
 
-export const initMessage = functions.firestore.document('{chatID}/chat1/messages/{docid}').onCreate(doc => {
+/*export const initMessage = functions.firestore.document('{chatID}/chat1/messages/{docid}').onCreate(doc => {
     return admin.firestore().doc('{chatID}/chat1/messages/' + doc.id).update({ 'timestamp': admin.firestore.Timestamp, 'likeArr': [] });
-});
+});*/
 
 export const sendMessage = functions.https.onRequest((request, response) => {
     cors(request, response, async () => {
