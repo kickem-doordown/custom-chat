@@ -29,6 +29,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import { MultiChatComponent } from './multi-chat-container/multi-chat.component';
+import { ChatListComponent } from './chat-list/chat-list.component';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { MultiChatComponent } from './multi-chat-container/multi-chat.component'
     ChatComponent,
     SignupComponent,
     ProfilePageComponent,
-    MultiChatComponent
+    MultiChatComponent,
+    ChatListComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import { MultiChatComponent } from './multi-chat-container/multi-chat.component'
     MatToolbarModule,
     MatCardModule,
     MatDividerModule,
-    MatMenuModule
+    MatMenuModule,
+    MatListModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],
