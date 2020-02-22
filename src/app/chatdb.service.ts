@@ -7,10 +7,20 @@ import { first } from 'rxjs/operators';
 })
 export class ChatdbService {
 
+  chatID: string;
+
   constructor(public db: AngularFirestore) { }
   
   getChats() {
     return this.db.collection('chats', ref => ref.orderBy("last_read", "desc")).valueChanges();
+  }
+
+  getChat(chatID: string) {
+    return this.db.collection('chats').doc(chatID);
+  }
+
+  getCurChat() {
+    return this.db.collection('chats').doc(this.chatID);
   }
 
   getChatData(chatID: string){
