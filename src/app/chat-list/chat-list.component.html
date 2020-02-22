@@ -3,7 +3,6 @@
     <mat-list-item *ngFor="let c of chatArr">
         <img matListAvatar src="https://i.kym-cdn.com/photos/images/newsfeed/001/227/573/20d.jpg">
         <h3 matLine>{{c.name}}</h3>
-        <p matLine>
-            <span> More information like last read/ latest message</span>
+        <span matLine *ngFor="let u of c.users">{{u}}</span>
     </mat-list-item>
 </mat-nav-list>
