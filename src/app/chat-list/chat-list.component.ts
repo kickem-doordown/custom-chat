@@ -22,8 +22,11 @@ export class ChatListComponent implements OnInit {
     this.chats.pipe(take(1)).subscribe(data => {
       this.chatArr = data;
     });
+  }
 
-    
+  setChatID(chatID: string) {
+    this.chatdb.setChatID(chatID);
+    console.log(this.chatdb.chatID);
   }
 
 }

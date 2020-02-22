@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { first } from 'rxjs/operators';
 
@@ -7,7 +7,10 @@ import { first } from 'rxjs/operators';
 })
 export class ChatdbService {
 
-  chatID: string;
+  chatID: string = "chat1";
+  
+  @Output() chatChanged: EventEmitter<any> = new EventEmitter();
+
 
   constructor(public db: AngularFirestore) { }
   
@@ -25,6 +28,16 @@ export class ChatdbService {
 
   getChatData(chatID: string){
     return this.db.collection('chats').doc(chatID).valueChanges();
+  }
+
+  
+  setChatID(chatID: string) {
+    this.chatID = chatID;
+    this.chatChanged.emit();
+  }
+
+  getChatID() {
+    return this.chatID;
   }
 
 }

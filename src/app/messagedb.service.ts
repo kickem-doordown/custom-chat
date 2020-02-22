@@ -15,33 +15,33 @@ export class MessagedbService {
   constructor(public db: AngularFirestore, public http: HttpClient, public chatdb: ChatdbService) { }
 
   getRecentMessages(chatID: string, num: number){
-    return this.chatdb.getChat(chatID).collection('messages', ref => ref.orderBy("timestamp", "desc").limit(num)).get().pipe(first());
+    return this.chatdb.getCurChat().collection('messages', ref => ref.orderBy("timestamp", "desc").limit(num)).get().pipe(first());
   }
 
   getPageAfter(chatID: string, limit: number, startDoc: any){
-    return this.chatdb.getChat(chatID).collection('messages', ref => ref.orderBy("timestamp", "desc").startAfter(startDoc).limit(limit)).get().pipe(first());
+    return this.chatdb.getCurChat().collection('messages', ref => ref.orderBy("timestamp", "desc").startAfter(startDoc).limit(limit)).get().pipe(first());
   }
 
   getMessageUpdates(chatID: string){
-    return this.chatdb.getChat(chatID).collection('messages', ref => ref.orderBy("timestamp", "desc").limit(1)).snapshotChanges().pipe(skip(1));
+    return this.chatdb.getCurChat().collection('messages', ref => ref.orderBy("timestamp", "desc").limit(1)).snapshotChanges().pipe(skip(1));
   }
 
   sendMessage(chatID: string, mes: any){
     mes["likeArr"] = [];
     mes["timestamp"] = firebase.firestore.Timestamp.now();
-    return this.chatdb.getChat(chatID).collection('messages').doc(mes.docid).set(mes);
+    return this.chatdb.getCurChat().collection('messages').doc(mes.docid).set(mes);
   }
 
   likeMessage(chatID: string, messageObj: any, user: string){
     if(messageObj.likeArr.includes(user)) {
-      return this.chatdb.getChat(chatID).collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});
+      return this.chatdb.getCurChat().collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayRemove(user)});
     } else {
-      return this.chatdb.getChat(chatID).collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayUnion(user)});
+      return this.chatdb.getCurChat().collection('messages').doc(messageObj.docid).update({"likeArr": firebase.firestore.FieldValue.arrayUnion(user)});
     }
   }
   
   getMessageData(chatID: string, doc: any){
-    return this.chatdb.getChat(chatID).collection('messages').doc(doc).valueChanges();
+    return this.chatdb.getCurChat().collection('messages').doc(doc).valueChanges();
   }
 
   // getObservable(num: number){
