@@ -30,6 +30,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import {MatMenuModule} from '@angular/material/menu';
 import { MultiChatComponent } from './multi-chat-container/multi-chat.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatListElementComponent } from './chat-list-element/chat-list-element.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { ChatListComponent } from './chat-list/chat-list.component';
     SignupComponent,
     ProfilePageComponent,
     MultiChatComponent,
-    ChatListComponent
+    ChatListComponent,
+    ChatListElementComponent
   ],
   imports: [
     BrowserModule,

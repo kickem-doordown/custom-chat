@@ -1,4 +1,4 @@
 <p>chat-list works!</p>
 <div *ngFor="let c of chatArr">
-    <div>{{c.get("name")}}</div>
+    <app-chat-list-element [chat]="c"></app-chat-list-element>
 </div>

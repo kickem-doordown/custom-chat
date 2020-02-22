@@ -13,4 +13,8 @@ export class ChatdbService {
     return this.db.collection('chats', ref => ref.orderBy("last_read", "desc")).get().pipe(first());
   }
 
+  getChatData(chatID: string){
+    return this.db.collection('chats').doc(chatID).valueChanges();
+  }
+
 }
