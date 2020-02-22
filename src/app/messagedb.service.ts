@@ -28,8 +28,7 @@ export class MessagedbService {
   sendMessage(chatID: string, mes: any){
     mes["likeArr"] = [];
     mes["timestamp"] = firebase.firestore.Timestamp.now();
-    // TODO multiple chats needs to not be hardcoded
-    return this.db.collection('chat').doc('chat1').collection('messages').doc(mes.docid).set(mes);
+    return this.db.collection('chat').doc(chatID).collection('messages').doc(mes.docid).set(mes);
   }
 
   likeMessage(chatID: string, messageObj: any, user: string){
