@@ -13,14 +13,16 @@ export class ChatListComponent implements OnInit {
   chats: Observable<any>;
   chatArr: any[] = [];
 
+  chatDataArr: any[] = [];
+
   constructor(public chatdb: ChatdbService ) { }
 
   ngOnInit() {
     this.chats = this.chatdb.getChats();
     this.chats.pipe(take(1)).subscribe(data => {
-      this.chatArr = data.docs;
-      console.log(this.chatArr);
+      this.chatArr = data;
     });
+
     
   }
 

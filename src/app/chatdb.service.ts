@@ -10,7 +10,7 @@ export class ChatdbService {
   constructor(public db: AngularFirestore) { }
   
   getChats() {
-    return this.db.collection('chats', ref => ref.orderBy("last_read", "desc")).get().pipe(first());
+    return this.db.collection('chats', ref => ref.orderBy("last_read", "desc")).valueChanges();
   }
 
   getChatData(chatID: string){
