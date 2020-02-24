@@ -10,10 +10,6 @@ body {
     background-color: lightgray;
 }
 
-.sidenav {
-    max-width: 90%
-}
-
 .chat-body {
     flex: 1 1 100vh;
     display: flex;
@@ -109,10 +105,4 @@ body {
 
  ::-webkit-scrollbar-thumb:hover {
     background: #555;
-}
-
-.fill-remaining-space {
-    /* This fills the remaining space, by using flexbox. 
-       Every toolbar row uses a flexbox row layout. */
-    flex: 1 1 auto;
 }

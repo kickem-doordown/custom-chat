@@ -10,9 +10,13 @@ import { ChatdbService } from '../chatdb.service';
 @Component({
   selector: 'app-multi-chat',
   templateUrl: './multi-chat.component.html',
-  //styleUrls: ['./chat.component.css']
+  styleUrls: ['./multi-chat.component.css']
 })
-export class MultiChatComponent  {
+export class MultiChatComponent implements OnInit, AfterViewInit{
+
+  @ViewChild('container', { static: false })
+  container: ElementRef;  
+  containerStyle = { "height": window.innerHeight + "px" };
 
   isShown: boolean = true;
   
@@ -22,6 +26,12 @@ export class MultiChatComponent  {
     this.chatdb.chatChanged.subscribe(val => {
       console.log("test");
       this.reInit();
+    });
+  }
+
+  ngAfterViewInit() {
+    window.addEventListener("resize", () => {
+      this.containerStyle = { "height": window.innerHeight + "px" };
     });
   }
 

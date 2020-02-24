@@ -34,7 +34,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   messageNum: number = 0;
   pageSize: number = 10;
-  containerStyle = { "height": window.innerHeight + "px" };
+  containerStyle = { "height": window.innerHeight - 64 + "px" };
   isScrolledToBottom: boolean = true;
 
   nsfw: boolean = false;
@@ -78,7 +78,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     window.addEventListener("resize", () => {
-      this.containerStyle = { "height": window.innerHeight + "px" };
+      this.containerStyle = { "height": window.innerHeight - 64 + "px" };
     });
 
     this.chatContainer.nativeElement.addEventListener("scroll", () => {

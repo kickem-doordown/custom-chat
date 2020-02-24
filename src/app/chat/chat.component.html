@@ -1,52 +1,24 @@
-<mat-sidenav-container class="example-container">
+<div class="container" #container [ngStyle]="containerStyle">
 
-
-    <mat-sidenav #sidenavleft mode="over" class="sidenav">
-        <app-chat-list></app-chat-list>
-    </mat-sidenav>
-    <mat-sidenav #sidenavright mode="over" position="end" class="sidenav">
-        <button mat-button style="height: 0; position: absolute;"> <!-- 'absorbs' the auto-focus behavior -->
-        </button>
-        <app-profile-page></app-profile-page>
-    </mat-sidenav>
-
-    <div class="container" #container [ngStyle]="containerStyle">
-        <mat-toolbar color="primary">
-            <span>
-                <button mat-icon-button (click)="sidenavleft.toggle()"><mat-icon>menu</mat-icon></button >
-            </span>
-
-            <!-- This fills the remaining space of the current row -->
-            <span class="fill-remaining-space">
-                <marquee id="header">
-                    <img src="assets/uc.gif">
-                </marquee>
-            </span>
-
-            <span>
-                <button mat-icon-button (click)="sidenavright.toggle()"><mat-icon>settings</mat-icon></button >
-            </span>
-        </mat-toolbar>
-        <div class="chat-body" #chat>
-            <div *ngFor="let m of mesArr">
-                <app-message [chatID]="chatID" [messageDoc]="m"></app-message>
-            </div>
+    <div class="chat-body" #chat>
+        <div *ngFor="let m of mesArr">
+            <app-message [chatID]="chatID" [messageDoc]="m"></app-message>
         </div>
-
-        <div class="chat-input">
-            <form class="chat-form" (ngSubmit)="sendMessage($event, 'normal')">
-                <mat-slide-toggle [(ngModel)]="nsfw" [ngModelOptions]="{standalone: true}">NSFW</mat-slide-toggle>
-                <div style="display: flex; flex-direction: row;">
-                    <mat-form-field>
-                        <input matInput #messageText autocomplete="off">
-                    </mat-form-field>
-                    <div style="display:flex; flex-direction: column;">
-                        <button id="send" (click)="sendMessage($event, 'normal')" mat-raised-button>send  </button>
-                        <button id="anon" (click)="sendMessage($event, 'anon')" mat-raised-button>anon </button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
     </div>
-</mat-sidenav-container>
+
+    <div class="chat-input">
+        <form class="chat-form" (ngSubmit)="sendMessage($event, 'normal')">
+            <mat-slide-toggle [(ngModel)]="nsfw" [ngModelOptions]="{standalone: true}">NSFW</mat-slide-toggle>
+            <div style="display: flex; flex-direction: row;">
+                <mat-form-field>
+                    <input matInput #messageText autocomplete="off">
+                </mat-form-field>
+                <div style="display:flex; flex-direction: column;">
+                    <button id="send" (click)="sendMessage($event, 'normal')" mat-raised-button>send  </button>
+                    <button id="anon" (click)="sendMessage($event, 'anon')" mat-raised-button>anon </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
