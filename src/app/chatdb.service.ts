@@ -22,7 +22,7 @@ export class ChatdbService {
   createChat(name: string, user: string) {
     let chat = {};
     chat["name"] = name;
-    chat["usersA"] = [user];
+    chat["users"] = [user];
     chat["last_read"] = firebase.firestore.FieldValue.serverTimestamp();
     this.db.collection('chats').add(chat).then(ref => {
       ref.collection('messages').add({value:""});
