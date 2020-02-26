@@ -1,7 +1,7 @@
 <mat-sidenav-container class="example-container">
 
 
-    <mat-sidenav #sidenavleft mode="over" class="sidenav">
+    <mat-sidenav #sidenavleft mode="over" class="sidenav" (click)="sidenavleft.close()">
         <app-chat-list></app-chat-list>
     </mat-sidenav>
     <mat-sidenav #sidenavright mode="over" position="end" class="sidenav">
