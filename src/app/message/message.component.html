@@ -23,7 +23,7 @@
             <youtube-player [width]="200" [height]="100" [videoId]="youtubeId"></youtube-player>
         </div>
         </span>
-        <span class="timestamp">{{messageData.timestamp.seconds*1000 | date:'medium'}} </span>
+        <span *ngIf="messageData.timestamp != null" class="timestamp">{{messageData.timestamp.seconds*1000 | date:'medium'}} </span>
     </div>
     <div class="like-container" *ngIf="loaded">
         <div (click)="likeMes()" #likeContainer>
