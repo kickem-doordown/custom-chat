@@ -12,38 +12,22 @@ import { ChatdbService } from '../chatdb.service';
   templateUrl: './multi-chat.component.html',
   styleUrls: ['./multi-chat.component.css']
 })
-export class MultiChatComponent implements OnInit, AfterViewInit{
+export class MultiChatComponent implements AfterViewInit{
 
   @ViewChild('container', { static: false })
   container: ElementRef;  
   containerStyle = { "height": window.innerHeight + "px" };
 
-  isShown: boolean = true;
-  
-  constructor(public chatdb: ChatdbService, public auth: AuthService, public router: Router ) { 
-    if (localStorage.getItem('user') == null || this.auth.userData == null) {
-      this.router.navigate(['/loginpage']);
-    } 
-  }
+  isShown: boolean = false;
 
-  ngOnInit() {
-    this.chatdb.chatChanged.subscribe(val => {
-      console.log("test");
-      this.reInit();
-    });
-  }
+  
+  constructor(public chatdb: ChatdbService ) { }
+
 
   ngAfterViewInit() {
     window.addEventListener("resize", () => {
       this.containerStyle = { "height": window.innerHeight + "px" };
     });
-  }
-
-  reInit() {
-    this.isShown = false;
-    setTimeout(() => {
-      this.isShown = true;
-    })
   }
 
 }

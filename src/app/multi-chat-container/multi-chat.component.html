@@ -28,7 +28,16 @@
                 <button mat-icon-button (click)="sidenavright.toggle()"><mat-icon>settings</mat-icon></button >
             </span>
         </mat-toolbar>
-        <app-chat class="chat-body" *ngIf="isShown" chatID="chatdb.chatID" chatName="THE CHAT"></app-chat>
+
+        <ng-container *ngFor="let c of chatdb.chatList | async">
+            <app-chat class="chat-body" *ngIf="chatdb.chatID === c.id" chatID="chatdb.chatID" chatName="THE CHAT"></app-chat>
+        </ng-container>
+
+        <div *ngIf="!chatdb.chatID">
+            NONE CHAT SELECT
+            <br>
+            PLEASE SELECT CHAT
+        </div>
     </div>
 
 </mat-sidenav-container>

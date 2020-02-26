@@ -2,29 +2,38 @@ import { Injectable, NgZone } from '@angular/core';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Router } from "@angular/router";
+import { resolve } from 'url';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
   userData: firebase.User;
+  isReady: Promise<any>;
+
   constructor(public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
-    /* Saving user data as an object in localstorage if logged out than set to null */
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user; // Setting up user data in userData var
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        this.router.navigate(['']);
-      } else {
-        localStorage.setItem('user', null);
-        if (!this.router.navigated) {
-          this.router.navigate(['/loginpage']);
+    /*wrapping in promise to delay bootstrap until finished*/
+    this.isReady = new Promise((resolve) => {
+
+       /* Saving user data as an object in localstorage if logged out than set to null */
+      this.afAuth.authState.subscribe(user => {
+        if (user) {
+          this.userData = user; // Setting up user data in userData var
+          localStorage.setItem('user', JSON.stringify(this.userData));
+          resolve();
+          this.router.navigate(['']);
+        } else {
+          localStorage.setItem('user', null);
+          resolve();
+          if (!this.router.navigated) {
+            this.router.navigate(['/loginpage']);
+          }
         }
-      }
-      
+      });
       
     });
   }

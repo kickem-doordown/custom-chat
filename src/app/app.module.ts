@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, DoBootstrap, ApplicationRef } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -68,6 +68,15 @@ import {MatListModule} from '@angular/material/list';
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],
-  bootstrap: [AppComponent]
+  entryComponents: [AppComponent]
+ // bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule implements DoBootstrap {
+
+  constructor(private auth: AuthService){}
+
+  async ngDoBootstrap(appRef: ApplicationRef) {
+    await this.auth.isReady;
+    appRef.bootstrap(AppComponent); 
+  }
+ }

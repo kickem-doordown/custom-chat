@@ -2,21 +2,23 @@ import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { first } from 'rxjs/operators';
+import { AuthService } from './core/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChatdbService {
 
-  chatID: string = "chat1";
+  chatID: string;
+  chatList: Observable<any>;
   
-  @Output() chatChanged: EventEmitter<any> = new EventEmitter();
-
-
-  constructor(public db: AngularFirestore) { }
+  constructor(public db: AngularFirestore, public auth: AuthService) {
+    this.chatList = this.db.collection('chats', ref => ref.where('users', 'array-contains', this.auth.userData.uid)).valueChanges();
+  }
   
   getChats() {
-    return this.db.collection('chats', ref => ref.orderBy("last_read", "desc")).valueChanges();
+    return this.db.collection('chats', ref => ref.where('users', 'array-contains', this.auth.userData.uid)).valueChanges();
   }
 
   createChat(name: string, user: string) {
@@ -42,10 +44,8 @@ export class ChatdbService {
     return this.db.collection('chats').doc(chatID).valueChanges();
   }
 
-  
   setChatID(chatID: string) {
     this.chatID = chatID;
-    this.chatChanged.emit();
   }
 
   getChatID() {
