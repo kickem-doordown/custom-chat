@@ -1,3 +1,10 @@
 .nav-list {
     width: 500px;
 }
+
+.add-button {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 20;
+}

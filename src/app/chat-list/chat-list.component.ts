@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ChatdbService } from '../chatdb.service';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-chat-list',
@@ -15,7 +16,7 @@ export class ChatListComponent implements OnInit {
 
   chatDataArr: any[] = [];
 
-  constructor(public chatdb: ChatdbService ) { }
+  constructor(public chatdb: ChatdbService, public auth: AuthService ) { }
 
   ngOnInit() {
     this.chats = this.chatdb.getChats();
@@ -27,6 +28,10 @@ export class ChatListComponent implements OnInit {
   setChatID(chatID: string) {
     this.chatdb.setChatID(chatID);
     console.log(this.chatdb.chatID);
+  }
+
+  addChat() {
+    this.chatdb.createChat("testo", this.auth.userData.displayName);
   }
 
 }

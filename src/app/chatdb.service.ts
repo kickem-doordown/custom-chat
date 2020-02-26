@@ -1,5 +1,6 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase/app';
 import { first } from 'rxjs/operators';
 
 @Injectable({
@@ -16,6 +17,17 @@ export class ChatdbService {
   
   getChats() {
     return this.db.collection('chats', ref => ref.orderBy("last_read", "desc")).valueChanges();
+  }
+
+  createChat(name: string, user: string) {
+    let chat = {};
+    chat["name"] = name;
+    chat["usersA"] = [user];
+    chat["last_read"] = firebase.firestore.FieldValue.serverTimestamp();
+    this.db.collection('chats').add(chat).then(ref => {
+      ref.collection('messages').add({value:""});
+      ref.update({"id": ref.id});
+    });
   }
 
   getChat(chatID: string) {
