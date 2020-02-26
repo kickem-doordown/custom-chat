@@ -1,9 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewInit, AfterContentInit, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
 import { AuthService } from '../core/auth.service';
 
 @Component({
@@ -34,16 +32,12 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   messageNum: number = 0;
   pageSize: number = 10;
-  containerStyle = { "height": window.innerHeight - 64 + "px" };
+  containerStyle = { "height": window.innerHeight + "px" };
   isScrolledToBottom: boolean = true;
 
   nsfw: boolean = false;
 
-  constructor(public mesService: MessagedbService, public auth: AuthService, public router: Router) {
-    if (localStorage.getItem('user') == null || this.auth.userData == null) {
-      this.router.navigate(['/loginpage']);
-    } 
-  }
+  constructor(public mesService: MessagedbService, public auth: AuthService) {}
 
   ngOnInit() {
     this.messages = this.mesService.getRecentMessages(this.chatID, this.pageSize);
@@ -78,7 +72,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     window.addEventListener("resize", () => {
-      this.containerStyle = { "height": window.innerHeight - 64 + "px" };
+      this.containerStyle = { "height": window.innerHeight + "px" };
     });
 
     this.chatContainer.nativeElement.addEventListener("scroll", () => {

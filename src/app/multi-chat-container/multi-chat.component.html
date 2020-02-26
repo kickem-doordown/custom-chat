@@ -28,7 +28,7 @@
                 <button mat-icon-button (click)="sidenavright.toggle()"><mat-icon>settings</mat-icon></button >
             </span>
         </mat-toolbar>
-        <app-chat *ngIf="isShown" chatID="chatdb.chatID" chatName="THE CHAT"></app-chat>
+        <app-chat class="chat-body" *ngIf="isShown" chatID="chatdb.chatID" chatName="THE CHAT"></app-chat>
     </div>
 
 </mat-sidenav-container>

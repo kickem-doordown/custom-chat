@@ -20,7 +20,11 @@ export class MultiChatComponent implements OnInit, AfterViewInit{
 
   isShown: boolean = true;
   
-  constructor(public chatdb: ChatdbService ) { }
+  constructor(public chatdb: ChatdbService, public auth: AuthService, public router: Router ) { 
+    if (localStorage.getItem('user') == null || this.auth.userData == null) {
+      this.router.navigate(['/loginpage']);
+    } 
+  }
 
   ngOnInit() {
     this.chatdb.chatChanged.subscribe(val => {

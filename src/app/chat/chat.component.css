@@ -6,7 +6,6 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin: auto;
     background-color: lightgray;
 }
 

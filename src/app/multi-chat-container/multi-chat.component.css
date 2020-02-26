@@ -15,3 +15,11 @@
     margin: auto;
     background-color: lightgray;
 }
+
+.chat-body {
+    flex: 1 1 100vh;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    background-color: gray;
+}
