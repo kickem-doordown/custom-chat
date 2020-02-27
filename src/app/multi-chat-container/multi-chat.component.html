@@ -16,7 +16,15 @@
     <mat-sidenav #sidenavright mode="over" position="end" class="sidenav">
         <button mat-button style="height: 0; position: absolute;"> <!-- 'absorbs' the auto-focus behavior -->
         </button>
-        <app-profile-page></app-profile-page>
+        <mat-tab-group>
+            <mat-tab label="User Profile">
+                <app-profile-page></app-profile-page>
+            </mat-tab>
+            <mat-tab label="Chat Options">
+
+            </mat-tab>
+
+        </mat-tab-group>
     </mat-sidenav>
 
     <div class="container" #container [ngStyle]="containerStyle">

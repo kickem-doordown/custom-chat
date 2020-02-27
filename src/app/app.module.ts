@@ -22,15 +22,16 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { YouTubePlayerModule } from '@angular/youtube-player';
 import { SignupComponent } from './signup/signup.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { MultiChatComponent } from './multi-chat-container/multi-chat.component';
 import { ChatListComponent } from './chat-list/chat-list.component';
-import {MatListModule} from '@angular/material/list';
+import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -64,19 +65,20 @@ import {MatListModule} from '@angular/material/list';
     MatCardModule,
     MatDividerModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    MatTabsModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],
   entryComponents: [AppComponent]
- // bootstrap: [AppComponent]
+  // bootstrap: [AppComponent]
 })
 export class AppModule implements DoBootstrap {
 
-  constructor(private auth: AuthService){}
+  constructor(private auth: AuthService) { }
 
   async ngDoBootstrap(appRef: ApplicationRef) {
     await this.auth.isReady;
-    appRef.bootstrap(AppComponent); 
+    appRef.bootstrap(AppComponent);
   }
- }
+}
