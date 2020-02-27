@@ -31,7 +31,7 @@ export class ChatListComponent implements OnInit {
   }
 
   addChat() {
-    this.chatdb.createChat("testo", this.auth.userData.displayName);
+    this.chatdb.createChat("testo", this.auth.userData.uid);
   }
 
 }
