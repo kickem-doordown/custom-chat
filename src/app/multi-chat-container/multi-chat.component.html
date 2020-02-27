@@ -1,7 +1,16 @@
 <mat-sidenav-container class="example-container">
 
 
-    <mat-sidenav #sidenavleft mode="over" class="sidenav" (click)="sidenavleft.close()">
+    <mat-sidenav #sidenavleft mode="over" class="sidenav">
+        <button mat-button style="height: 0; position: absolute;"> <!-- 'absorbs' the auto-focus behavior --> </button>
+        <mat-toolbar color="secondary">
+            <span> 
+                <button mat-icon-button (click)="sidenavleft.close()" ><mat-icon>keyboard_backspace</mat-icon></button>
+            </span>
+            <span>
+                Custom Chats
+            </span>
+        </mat-toolbar>
         <app-chat-list></app-chat-list>
     </mat-sidenav>
     <mat-sidenav #sidenavright mode="over" position="end" class="sidenav">
@@ -35,8 +44,7 @@
 
         <div *ngIf="!chatdb.chatID">
             NONE CHAT SELECT
-            <br>
-            PLEASE SELECT CHAT
+            <br> PLEASE SELECT CHAT
         </div>
     </div>
 

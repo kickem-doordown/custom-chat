@@ -1,4 +1,3 @@
-<p>chat-list works!</p>
 <button mat-fab class="add-button" (click)="addChat()"><mat-icon>group_add</mat-icon></button>
 <mat-nav-list class="nav-list">
     <mat-list-item *ngFor="let c of chatdb.chatList | async" (click)="setChatID(c.id)">
