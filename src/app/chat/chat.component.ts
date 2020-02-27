@@ -44,7 +44,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
     this.messageNum = this.pageSize;
 
     this.messages.pipe(take(1)).subscribe(data => {
-      console.log(data);
       this.mesArr = data.docs;
     });
 

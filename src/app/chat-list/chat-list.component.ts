@@ -27,7 +27,6 @@ export class ChatListComponent implements OnInit {
 
   setChatID(chatID: string) {
     this.chatdb.setChatID(chatID);
-    console.log(this.chatdb.chatID);
   }
 
   addChat() {

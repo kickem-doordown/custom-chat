@@ -26,7 +26,7 @@
     "@angular/youtube-player": "^8.2.3",
     "@types/angular-sanitize": "^1.7.0",
     "autolinker": "^3.11.1",
-    "firebase": "^7.6.1",
+    "firebase": "^7.7.0",
     "hammerjs": "^2.0.8",
     "lodash": "^4.17.15",
     "ngx-tweet": "^2.0.3",

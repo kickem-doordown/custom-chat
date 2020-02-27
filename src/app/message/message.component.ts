@@ -187,7 +187,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.messageDoc)
+    //console.log(this.messageDoc)
   }
 
 }

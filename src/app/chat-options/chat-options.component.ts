@@ -9,10 +9,18 @@ import { take } from 'rxjs/operators';
 })
 export class ChatOptionsComponent implements OnInit {
 
+  chatData: any;
 
   constructor(public chatdb: ChatdbService) { }
 
   ngOnInit() {
+    this.chatdb.chatIDObservable.subscribe(chatID => {
+      if (chatID && chatID != undefined) {
+        this.chatdb.getChatData(chatID).forEach(data => {
+          this.chatData = data;
+        });
+      }
+    });
   }
 
 }

@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { first } from 'rxjs/operators';
 import { AuthService } from './core/auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +11,11 @@ import { Observable } from 'rxjs';
 export class ChatdbService {
 
   chatID: string;
+  chatIDObservable: Subject<string>;
   chatList: Observable<any>;
   
   constructor(public db: AngularFirestore, public auth: AuthService) {
+    this.chatIDObservable = new Subject(); 
     this.chatList = this.db.collection('chats', ref => ref.where('users', 'array-contains', this.auth.userData.uid)).valueChanges();
   }
   
@@ -46,6 +48,7 @@ export class ChatdbService {
 
   setChatID(chatID: string) {
     this.chatID = chatID;
+    this.chatIDObservable.next(this.chatID);
   }
 
   getChatID() {
