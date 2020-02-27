@@ -23,4 +23,8 @@ export class ChatOptionsComponent implements OnInit {
     });
   }
 
+  leaveChat(){
+    this.chatdb.leaveCurrentChat();
+  }
+
 }
