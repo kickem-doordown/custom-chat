@@ -32,6 +32,7 @@ import { MultiChatComponent } from './multi-chat-container/multi-chat.component'
 import { ChatListComponent } from './chat-list/chat-list.component';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ChatOptionsComponent } from './chat-options/chat-options.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     SignupComponent,
     ProfilePageComponent,
     MultiChatComponent,
-    ChatListComponent
+    ChatListComponent,
+    ChatOptionsComponent
   ],
   imports: [
     BrowserModule,

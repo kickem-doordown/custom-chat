@@ -16,12 +16,12 @@
     <mat-sidenav #sidenavright mode="over" position="end" class="sidenav">
         <button mat-button style="height: 0; position: absolute;"> <!-- 'absorbs' the auto-focus behavior -->
         </button>
-        <mat-tab-group>
+        <mat-tab-group dynamicHeight>
             <mat-tab label="User Profile">
                 <app-profile-page></app-profile-page>
             </mat-tab>
             <mat-tab label="Chat Options">
-
+                <app-chat-options *ngIf="chatdb.chatID"></app-chat-options>
             </mat-tab>
 
         </mat-tab-group>
