@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ChatdbService } from '../chatdb.service';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../core/auth.service';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-chat-list',
@@ -16,7 +17,7 @@ export class ChatListComponent implements OnInit {
 
   chatDataArr: any[] = [];
 
-  constructor(public chatdb: ChatdbService, public auth: AuthService ) { }
+  constructor(public chatdb: ChatdbService, public auth: AuthService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.chats = this.chatdb.getChats();
@@ -30,7 +31,36 @@ export class ChatListComponent implements OnInit {
   }
 
   addChat() {
-    this.chatdb.createChat("testo", this.auth.userData.uid);
+    const dialogRef = this.dialog.open(CreateChatDialog, {
+      width: '250px',
+      data: {name: null}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if (result != null) {
+        this.chatdb.createChat(result, this.auth.userData.uid);
+      }
+    });
   }
 
+}
+
+export interface ChatDialogData {
+  name: string;
+}
+
+@Component({
+  selector: 'app-create-chat-dialog',
+  templateUrl: 'create-chat-dialog.html',
+  styleUrls: ['create-chat-dialog.css']
+})
+export class CreateChatDialog {
+  constructor(
+    public dialogRef: MatDialogRef<CreateChatDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ChatDialogData) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 }

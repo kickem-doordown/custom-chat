@@ -29,10 +29,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatMenuModule } from '@angular/material/menu';
 import { MultiChatComponent } from './multi-chat-container/multi-chat.component';
-import { ChatListComponent } from './chat-list/chat-list.component';
+import { ChatListComponent, CreateChatDialog } from './chat-list/chat-list.component';
 import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ChatOptionsComponent } from './chat-options/chat-options.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { ChatOptionsComponent } from './chat-options/chat-options.component';
     ProfilePageComponent,
     MultiChatComponent,
     ChatListComponent,
-    ChatOptionsComponent
+    ChatOptionsComponent,
+    CreateChatDialog
   ],
   imports: [
     BrowserModule,
@@ -68,11 +71,12 @@ import { ChatOptionsComponent } from './chat-options/chat-options.component';
     MatDividerModule,
     MatMenuModule,
     MatListModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy }],
-  entryComponents: [AppComponent]
+  entryComponents: [AppComponent, CreateChatDialog]
   // bootstrap: [AppComponent]
 })
 export class AppModule implements DoBootstrap {
