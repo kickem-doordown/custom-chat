@@ -27,6 +27,7 @@ export class ChatdbService {
     let chat = {};
     chat["name"] = name;
     chat["users"] = [user];
+    chat["inviteLink"] = (Math.floor(Math.random() * 1000000000000)).toString(16);
     chat["last_read"] = firebase.firestore.FieldValue.serverTimestamp();
     this.db.collection('chats').add(chat).then(ref => {
       ref.collection('messages').add({value:""});
@@ -58,6 +59,17 @@ export class ChatdbService {
   leaveCurrentChat(){
     this.db.collection('chats').doc(this.chatID).update({users: firebase.firestore.FieldValue.arrayRemove(this.auth.userData.uid)});
     this.chatID = undefined;
+  }
+
+  joinChat(inviteKey){
+    return new Promise((resolve, reject) => {
+      this.db.collection('chats', ref => ref.where('inviteLink', '==', inviteKey)).get().subscribe(doc => {
+        if(doc.docs.length === 0)
+          reject();
+        
+        doc.docs[0].ref.update({users: firebase.firestore.FieldValue.arrayUnion(this.auth.userData.uid)}).then(() => resolve()).catch(err => reject(err));
+      });
+    });
   }
 
 }
