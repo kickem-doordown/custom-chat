@@ -1,5 +1,9 @@
-<div *ngIf="chatData">
-    <p>{{chatData.name}}</p>
+<mat-card *ngIf="chatData" class="options-wrapper">
+    <mat-card-header>
+        <mat-card-title>{{chatData.name}}</mat-card-title>
+    </mat-card-header>
+
+    <mat-divider [inset]="true"></mat-divider>
 
     <button mat-raised-button color="warn" (click)="leaveChat()">Leave Chat</button>
-</div>
+</mat-card>
