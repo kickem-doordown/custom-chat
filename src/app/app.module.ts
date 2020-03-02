@@ -34,6 +34,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ChatOptionsComponent } from './chat-options/chat-options.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { inviteComponent } from './invite-link/invite.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     MultiChatComponent,
     ChatListComponent,
     ChatOptionsComponent,
-    CreateChatDialog
+    CreateChatDialog,
+    inviteComponent
   ],
   imports: [
     BrowserModule,
