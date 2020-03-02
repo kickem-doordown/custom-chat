@@ -56,6 +56,14 @@ export class ChatdbService {
     return this.chatID;
   }
 
+  updateCurChatData(data: any) {
+    this.updateChatData(this.chatID, data);
+  }
+
+  updateChatData(chatID: string, data: any) {
+    this.db.collection('chats').doc(chatID).update(data);
+  }
+
   leaveCurrentChat(){
     this.db.collection('chats').doc(this.chatID).update({users: firebase.firestore.FieldValue.arrayRemove(this.auth.userData.uid)});
     this.chatID = undefined;
