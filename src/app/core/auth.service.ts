@@ -25,7 +25,7 @@ export class AuthService {
           this.userData = user; // Setting up user data in userData var
           localStorage.setItem('user', JSON.stringify(this.userData));
           resolve();
-          this.router.navigate(['']);
+          //this.router.navigate(['']);
         } else {
           localStorage.setItem('user', null);
           resolve();
