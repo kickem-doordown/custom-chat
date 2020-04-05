@@ -101,6 +101,15 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       truncate: { length: 32 }
     });
 
+    // Look for meme arrows (>>)
+    let lines = this.messageText.split("\n");
+    for (let i = 0; i < lines.length; i++) {
+      if (lines[i].substring(0, 8) == "&gt;&gt;") {
+        lines[i] = '<font color="#789922">' + lines[i] + "</font>";
+      }
+    }
+    this.messageText = lines.join("\n");
+
     this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;
     this.nsfwVisible = this.nsfw;
     this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
