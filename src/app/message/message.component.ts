@@ -108,7 +108,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
         lines[i] = '<font color="#789922">' + lines[i] + "</font>";
       }
     }
-    this.messageText = lines.join("\n");
+    this.messageText = lines.join("<br>");
 
     this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;
     this.nsfwVisible = this.nsfw;
