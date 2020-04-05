@@ -7,11 +7,11 @@
     </div>
 
     <div class="chat-input">
-        <form class="chat-form" (ngSubmit)="sendMessage($event, 'normal')">
+        <form class="chat-form" (ngSubmit)="sendMessage($event, 'normal')" (keydown.enter)="sendMessage($event, 'normal')" >
             <mat-slide-toggle [(ngModel)]="nsfw" [ngModelOptions]="{standalone: true}">NSFW</mat-slide-toggle>
             <div style="display: flex; flex-direction: row;">
                 <mat-form-field>
-                    <input matInput #messageText autocomplete="off">
+                    <textarea matInput cdkTextareaAutosize #messageText autocomplete="off"(keydown.enter)="$event.preventDefault()" ></textarea>
                 </mat-form-field>
                 <div style="display:flex; flex-direction: column;">
                     <button id="send" (click)="sendMessage($event, 'normal')" mat-raised-button>send  </button>
