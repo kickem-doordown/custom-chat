@@ -1,7 +1,7 @@
 <button mat-fab class="add-button" (click)="addChat()"><mat-icon>group_add</mat-icon></button>
 <mat-nav-list class="nav-list">
     <mat-list-item *ngFor="let c of chatdb.chatList | async" (click)="setChatID(c.id)">
-        <img matListAvatar src="https://i.kym-cdn.com/photos/images/newsfeed/001/227/573/20d.jpg">
+        <img matListAvatar [src]="c.photoURL" onerror="this.src='assets/default_group_chat.png'">
         <h3 matLine>{{c.name}}</h3>
         <span matLine *ngFor="let u of c.users">{{u}}</span>
     </mat-list-item>
