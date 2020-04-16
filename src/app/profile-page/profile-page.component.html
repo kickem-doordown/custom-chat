@@ -1,6 +1,6 @@
 <mat-card class="profile-wrapper">
     <mat-card-header>
-        <div mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + auth.userData.photoURL + ')' }"></div>
+        <img mat-card-avatar class="profile-picture" [src]="auth.userData.photoURL" onerror="this.src='assets/default_group_chat.png'">
         <mat-card-title>{{auth.userData.displayName != null ? auth.userData.displayName : auth.userData.email}}</mat-card-title>
     </mat-card-header>
     <mat-divider [inset]="true"></mat-divider>

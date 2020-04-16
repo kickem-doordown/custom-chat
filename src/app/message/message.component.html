@@ -2,7 +2,7 @@
     <div class="container" [ngStyle]="messageStyle()">
         <div class="message">
             <span class="name">
-                <div *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [ngStyle]="{'background-image':'url(' + photoURL + ')' }"></div> 
+                <img *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [src]="photoURL" onerror="this.src='assets/default_group_chat.png'">
                 <span style="max-width:80%; word-wrap:break-word; word-break: break-all;">{{messageData.displayName}}: </span>
             <span style="flex: 1 1 auto"></span>
             <button mat-icon-button [matMenuTriggerFor]="menu">
