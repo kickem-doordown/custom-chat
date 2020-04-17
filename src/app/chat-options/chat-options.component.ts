@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatdbService } from '../chatdb.service';
 import { take } from 'rxjs/operators';
+import { Injectable, Inject } from '@angular/core';
+import { WINDOW } from '../core/window-provider';
 
 @Component({
   selector: 'app-chat-options',
@@ -11,7 +13,7 @@ export class ChatOptionsComponent implements OnInit {
 
   chatData: any;
 
-  constructor(public chatdb: ChatdbService) { }
+  constructor(public chatdb: ChatdbService, @Inject(WINDOW) private window: Window) { }
 
   ngOnInit() {
     this.chatdb.chatIDObservable.subscribe(chatID => {
@@ -21,6 +23,10 @@ export class ChatOptionsComponent implements OnInit {
         });
       }
     });
+  }
+
+  getInviteLink() {
+    return this.window.location.href + "invite/?key=" + this.chatData.inviteLink;
   }
 
   leaveChat(){

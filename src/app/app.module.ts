@@ -35,6 +35,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { ChatOptionsComponent } from './chat-options/chat-options.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { inviteComponent } from './invite-link/invite.component';
+import { WINDOW_PROVIDERS } from './core/window-provider';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { inviteComponent } from './invite-link/invite.component';
     MatDialogModule
   ],
   providers: [AuthService,
-    { provide: LocationStrategy, useClass: HashLocationStrategy }],
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    WINDOW_PROVIDERS],
   entryComponents: [AppComponent, CreateChatDialog]
   // bootstrap: [AppComponent]
 })
