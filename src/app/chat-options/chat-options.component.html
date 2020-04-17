@@ -1,5 +1,6 @@
 <mat-card *ngIf="chatData" class="options-wrapper">
     <mat-card-header>
+        <img matListAvatar mat-card-avatar class="profile-picture" [src]="chatData.photoURL" onerror="this.src='assets/default_group_chat.png'">
         <mat-card-title>{{chatData.name}}</mat-card-title>
     </mat-card-header>
 
