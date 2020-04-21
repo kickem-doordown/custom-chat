@@ -10,17 +10,21 @@ import { Observable, Subject } from 'rxjs';
 })
 export class ChatdbService {
 
-  chatID: string;
+  private chatID: string;
   chatIDObservable: Subject<string>;
-  chatList: Observable<any>;
-  
+  private chatList: Observable<any>;
+
   constructor(public db: AngularFirestore, public auth: AuthService) {
-    this.chatIDObservable = new Subject(); 
-    this.chatList = this.db.collection('chats', ref => ref.where('users', 'array-contains', this.auth.userData.uid)).valueChanges();
+    this.chatIDObservable = new Subject();
+    this.chatList = this.db.collection('chats', ref => {
+      let query = ref.where('users', 'array-contains', this.auth.userData.uid);
+      query = query.orderBy('last_read', 'desc');
+      return query;
+    }).valueChanges();
   }
-  
+
   getChats() {
-    return this.db.collection('chats', ref => ref.where('users', 'array-contains', this.auth.userData.uid)).valueChanges();
+    return this.chatList;
   }
 
   createChat(name: string, user: string) {
@@ -30,8 +34,9 @@ export class ChatdbService {
     chat["inviteLink"] = (Math.floor(Math.random() * 1000000000000)).toString(16);
     chat["last_read"] = firebase.firestore.FieldValue.serverTimestamp();
     this.db.collection('chats').add(chat).then(ref => {
-      ref.collection('messages').add({value:""});
-      ref.update({"id": ref.id});
+      ref.collection('messages').add({ value: "" });
+      ref.update({ "id": ref.id });
+      this.setChatID(ref.id);
     });
   }
 
@@ -43,7 +48,7 @@ export class ChatdbService {
     return this.db.collection('chats').doc(this.chatID);
   }
 
-  getChatData(chatID: string){
+  getChatData(chatID: string) {
     return this.db.collection('chats').doc(chatID).valueChanges();
   }
 
@@ -64,18 +69,18 @@ export class ChatdbService {
     this.db.collection('chats').doc(chatID).update(data);
   }
 
-  leaveCurrentChat(){
-    this.db.collection('chats').doc(this.chatID).update({users: firebase.firestore.FieldValue.arrayRemove(this.auth.userData.uid)});
-    this.chatID = undefined;
+  leaveCurrentChat() {
+    this.db.collection('chats').doc(this.chatID).update({ users: firebase.firestore.FieldValue.arrayRemove(this.auth.userData.uid) });
+    this.setChatID(undefined);
   }
 
-  joinChat(inviteKey){
+  joinChat(inviteKey) {
     return new Promise((resolve, reject) => {
       this.db.collection('chats', ref => ref.where('inviteLink', '==', inviteKey)).get().subscribe(doc => {
-        if(doc.docs.length === 0)
+        if (doc.docs.length === 0)
           reject();
-        
-        doc.docs[0].ref.update({users: firebase.firestore.FieldValue.arrayUnion(this.auth.userData.uid)}).then(() => resolve()).catch(err => reject(err));
+
+        doc.docs[0].ref.update({ users: firebase.firestore.FieldValue.arrayUnion(this.auth.userData.uid) }).then(() => resolve()).catch(err => reject(err));
       });
     });
   }

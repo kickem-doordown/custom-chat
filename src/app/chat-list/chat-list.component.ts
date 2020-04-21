@@ -37,7 +37,6 @@ export class ChatListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       if (result != null) {
         this.chatdb.createChat(result, this.auth.userData.uid);
       }
