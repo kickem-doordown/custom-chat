@@ -29,6 +29,7 @@ export class MessagedbService {
   sendMessage(chatID: string, mes: any){
     mes["likeArr"] = [];
     mes["timestamp"] = firebase.firestore.FieldValue.serverTimestamp();
+    this.chatdb.updateCurChatData({"last_read": firebase.firestore.FieldValue.serverTimestamp()});
     return this.chatdb.getCurChat().collection('messages').doc(mes.docid).set(mes);
   }
 

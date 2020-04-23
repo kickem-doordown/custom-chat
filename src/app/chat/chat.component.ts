@@ -50,8 +50,6 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       });
   
       this.mesSub = this.mesService.getMessageUpdates(ref).subscribe(data => {
-        console.log(data);
-  
         if (data[0].type === 'added') {
           console.log("new message: " + data[0].payload.doc.id);
           let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
