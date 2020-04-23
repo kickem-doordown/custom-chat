@@ -1,9 +1,9 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
-import { first } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { AuthService } from './core/auth.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,24 @@ export class ChatdbService {
   private chatID: string;
   chatIDObservable: Subject<string>;
   private chatList: Observable<any>;
+  private sortedChatList: Array<{last_read: firebase.firestore.Timestamp}> = [];
 
   constructor(public db: AngularFirestore, public auth: AuthService) {
     this.chatIDObservable = new Subject();
-    this.chatList = this.db.collection('chats', ref => {
-      let query = ref.where('users', 'array-contains', this.auth.userData.uid);
-      query = query.orderBy('last_read', 'desc');
-      return query;
-    }).valueChanges();
+    this.chatList = this.db.collection('chats', ref => ref.where('users', 'array-contains', this.auth.userData.uid)).valueChanges();
+    this.chatList.subscribe(ref => {
+      this.sortedChatList = ref;
+      this.sortedChatList.sort((a, b) => b.last_read.seconds - a.last_read.seconds);
+    });
+
   }
 
   getChats() {
     return this.chatList;
+  }
+
+  getSortedChats() {
+    return this.sortedChatList;
   }
 
   createChat(name: string, user: string) {
