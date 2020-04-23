@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { skip, first } from 'rxjs/operators';
+import { skip, first, take } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../environments/environment';

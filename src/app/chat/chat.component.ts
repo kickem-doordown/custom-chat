@@ -3,6 +3,7 @@ import { Observable, Subscription } from 'rxjs';
 import { MessagedbService } from '../messagedb.service';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../core/auth.service';
+import { ChatdbService } from '../chatdb.service';
 
 @Component({
   selector: 'app-chat',
@@ -37,32 +38,36 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   nsfw: boolean = false;
 
-  constructor(public mesService: MessagedbService, public auth: AuthService) {}
+  constructor(public chatdb: ChatdbService,public mesService: MessagedbService, public auth: AuthService) {}
 
   ngOnInit() {
-    this.messages = this.mesService.getRecentMessages(this.chatID, this.pageSize);
-    this.messageNum = this.pageSize;
-
-    this.messages.pipe(take(1)).subscribe(data => {
-      this.mesArr = data.docs;
-    });
-
-    this.mesSub = this.mesService.getMessageUpdates(this.chatID).subscribe(data => {
-      console.log(data);
-
-      if (data[0].type === 'added') {
-        console.log("new message: " + data[0].payload.doc.id);
-        let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
-        if(mesIndex != -1){
-          this.mesArr[mesIndex].loaded = true;
-        } else {
-          this.scrollCheck();
-          this.mesArr.unshift(data[0].payload.doc);
-          this.messageNum++;
-          this.scrollToBottom();
+    this.chatdb.chatIDObservable.subscribe(ref => {
+      this.messages = this.mesService.getRecentMessages(ref, this.pageSize);
+      this.messageNum = this.pageSize;
+  
+      this.messages.pipe(take(1)).subscribe(data => {
+        this.mesArr = data.docs;
+      });
+  
+      this.mesSub = this.mesService.getMessageUpdates(ref).subscribe(data => {
+        console.log(data);
+  
+        if (data[0].type === 'added') {
+          console.log("new message: " + data[0].payload.doc.id);
+          let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
+          if(mesIndex != -1){
+            this.mesArr[mesIndex].loaded = true;
+          } else {
+            this.scrollCheck();
+            this.mesArr.unshift(data[0].payload.doc);
+            this.messageNum++;
+            this.scrollToBottom();
+          }
         }
-      }
+      });
     });
+    // Hacky fix to trigger the above event listener
+    this.chatdb.setChatID(this.chatdb.getChatID());
 
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -78,7 +83,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.chatContainer.nativeElement.scrollTop == 0 && this.mesArr.length == this.messageNum) {
         this.messageNum += this.pageSize;
-        this.mesService.getPageAfter(this.chatID, this.pageSize, this.mesArr[this.mesArr.length - 1]).subscribe((data) => {
+        this.mesService.getPageAfter(this.chatdb.getChatID(), this.pageSize, this.mesArr[this.mesArr.length - 1]).subscribe((data) => {
           console.log(this.messageNum);
           this.mesArr = this.mesArr.concat(data.docs);
         });

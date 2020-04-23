@@ -46,9 +46,8 @@
             </span>
         </mat-toolbar>
 
-        <ng-container *ngFor="let c of chatdb.chatList | async">
-            <app-chat class="chat-body" *ngIf="chatdb.chatID === c.id" chatID="chatdb.chatID" chatName="THE CHAT"></app-chat>
-        </ng-container>
+        
+        <app-chat class="chat-body" *ngIf="chatdb.chatID" chatID="chatdb.chatID" chatName="THE CHAT"></app-chat>
 
         <div *ngIf="!chatdb.chatID">
             NONE CHAT SELECT

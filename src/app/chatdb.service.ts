@@ -10,7 +10,7 @@ import { Observable, Subject} from 'rxjs';
 })
 export class ChatdbService {
 
-  private chatID: string;
+  private chatID: string = null;
   chatIDObservable: Subject<string>;
   private chatList: Observable<any>;
   private sortedChatList: Array<{last_read: firebase.firestore.Timestamp}> = [];
