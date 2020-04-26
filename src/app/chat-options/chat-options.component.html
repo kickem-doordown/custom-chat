@@ -3,7 +3,21 @@
         <img matListAvatar mat-card-avatar class="profile-picture" [src]="chatData.photoURL" onerror="this.src='assets/default_group_chat.png'">
         <mat-card-title>{{chatData.name}}</mat-card-title>
     </mat-card-header>
-
+    <form class="edit-info" (ngSubmit)="updateInfo($event)">
+        <mat-form-field class="input-field" floatLabel="always">
+            <mat-label>Display Photo URL</mat-label>
+            <input type="url" matInput #displayURL [placeholder]="chatData.photoURL">
+            <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="input-field" floatLabel="always">
+            <mat-label>Display Name</mat-label>
+            <input type="text" matInput #displayName [placeholder]="chatData.name">
+            <mat-icon matSuffix>mode_edit</mat-icon>
+        </mat-form-field>
+        <br>
+        <button id="send" (click)="updateInfo($event)" mat-raised-button>Update Info</button>
+    </form>
     <mat-divider [inset]="true"></mat-divider>
     <span>{{getInviteLink()}}</span>
     <br />
