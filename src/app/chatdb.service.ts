@@ -37,6 +37,7 @@ export class ChatdbService {
     let chat = {};
     chat["name"] = name;
     chat["users"] = [user];
+    chat["photoURL"] = 'assets/default_group_chat.png';
     chat["inviteLink"] = (Math.floor(Math.random() * 1000000000000)).toString(16);
     chat["last_read"] = firebase.firestore.FieldValue.serverTimestamp();
     this.db.collection('chats').add(chat).then(ref => {
