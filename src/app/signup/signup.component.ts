@@ -18,5 +18,6 @@ export class SignupComponent implements OnInit {
     let user = event.target.elements[0].value;
     let pw = event.target.elements[1].value;
     this.auth.SignUp(user, pw);
+    this.router.navigateByUrl("/loginpage")
   }
 }
