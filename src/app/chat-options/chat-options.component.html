@@ -21,5 +21,8 @@
     <mat-divider [inset]="true"></mat-divider>
     <span>{{getInviteLink()}}</span>
     <br />
+    <button id="copy" (click)="copyMessage(getInviteLink())" mat-raised-button>Copy link</button>
+    <br>
+    <mat-divider [inset]="true"></mat-divider>
     <button mat-raised-button color="warn" (click)="leaveChat()">Leave Chat</button>
 </mat-card>
