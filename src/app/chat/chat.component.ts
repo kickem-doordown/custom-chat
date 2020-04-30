@@ -67,7 +67,9 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     
       this.chatdb.getDisplayName(this.auth.userData.uid).subscribe(doc => {
-        this.displayName = doc.displayName;
+        if(doc)
+          this.displayName = doc.displayName;
+       
       });
     
     });
