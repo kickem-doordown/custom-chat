@@ -17,7 +17,7 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('chat', { static: false })
   chatContainer: ElementRef;
   @ViewChild('container', { static: false })
-  container: ElementRef;  
+  container: ElementRef;
 
 
   @Input()
@@ -25,6 +25,8 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input()
   chatName: string = '';
+
+  displayName: string;
 
   messages: Observable<any>;
   mesArr: any[] = [];
@@ -38,22 +40,22 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
 
   nsfw: boolean = false;
 
-  constructor(public chatdb: ChatdbService,public mesService: MessagedbService, public auth: AuthService) {}
+  constructor(public chatdb: ChatdbService, public mesService: MessagedbService, public auth: AuthService) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.chatdb.chatIDObservable.subscribe(ref => {
       this.messages = this.mesService.getRecentMessages(ref, this.pageSize);
       this.messageNum = this.pageSize;
-  
+
       this.messages.pipe(take(1)).subscribe(data => {
         this.mesArr = data.docs;
       });
-  
+
       this.mesSub = this.mesService.getMessageUpdates(ref).subscribe(data => {
         if (data[0].type === 'added') {
           console.log("new message: " + data[0].payload.doc.id);
-          let mesIndex = this.mesArr.findIndex(mes =>{return mes.docid === data[0].payload.doc.id});
-          if(mesIndex != -1){
+          let mesIndex = this.mesArr.findIndex(mes => { return mes.docid === data[0].payload.doc.id });
+          if (mesIndex != -1) {
             this.mesArr[mesIndex].loaded = true;
           } else {
             this.scrollCheck();
@@ -63,7 +65,15 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       });
+    
+      this.chatdb.getDisplayName(this.auth.userData.uid).subscribe(doc => {
+        this.displayName = doc.displayName;
+      });
+    
     });
+
+
+    
     // Hacky fix to trigger the above event listener
     this.chatdb.setChatID(this.chatdb.getChatID());
 
@@ -96,21 +106,21 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   sendMessage(event, buttonType) {
-    let username =  buttonType === "normal"
-    ? (this.auth.userData.displayName != null ? this.auth.userData.displayName : this.auth.userData.email)
-    : "[anon]";
+    let username = buttonType === "normal"
+      ? (this.displayName != null ? this.displayName : this.auth.userData.email)
+      : "[anon]";
 
 
     let messageObj = {
-      docid : Date.now() + this.auth.userData.uid,
-      uid : this.auth.userData.uid,
+      docid: Date.now() + this.auth.userData.uid,
+      uid: this.auth.userData.uid,
       displayName: username,
       value: this.messageText.nativeElement.value,
       nsfw: this.nsfw,
       loaded: false,
       photoURL: buttonType === "normal" ? this.auth.userData.photoURL : "",
-      likeArr : [],
-      timestamp : Date.now()
+      likeArr: [],
+      timestamp: Date.now()
     };
 
     if (messageObj.value && messageObj.value !== '') {
@@ -136,25 +146,25 @@ export class ChatComponent implements OnInit, OnDestroy, AfterViewInit {
   // }
 
   scrollToBottom() {
-    setTimeout(()=>{
+    setTimeout(() => {
       try {
         let elem = this.chatContainer.nativeElement;
-        if(this.isScrolledToBottom){
+        if (this.isScrolledToBottom) {
           console.log("scroll");
           elem.scrollTop = elem.scrollHeight;
           console.log(elem.scrollTop);
         }
-      } catch (err) { 
+      } catch (err) {
         console.error(err);
       }
     }, 10);
   }
 
-  scrollCheck(){
-    try{
+  scrollCheck() {
+    try {
       let elem = this.chatContainer.nativeElement;
       this.isScrolledToBottom = elem.scrollHeight - elem.clientHeight <= elem.scrollTop + 1;
-    } catch (err){
+    } catch (err) {
       console.error(err)
     }
   }

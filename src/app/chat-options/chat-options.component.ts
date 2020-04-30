@@ -3,6 +3,7 @@ import { ChatdbService } from '../chatdb.service';
 import { take } from 'rxjs/operators';
 import { Injectable, Inject } from '@angular/core';
 import { WINDOW } from '../core/window-provider';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-chat-options',
@@ -17,7 +18,7 @@ export class ChatOptionsComponent implements OnInit {
   @ViewChild('displayName', { static: false })
   displayName: ElementRef;
 
-  constructor(public chatdb: ChatdbService, @Inject(WINDOW) private window: Window) { }
+  constructor(public chatdb: ChatdbService, public auth: AuthService, @Inject(WINDOW) private window: Window) { }
 
   ngOnInit() {
     this.chatdb.chatIDObservable.subscribe(chatID => {
@@ -46,6 +47,9 @@ export class ChatOptionsComponent implements OnInit {
     });
     this.displayURL.nativeElement.value = "";
     this.displayName.nativeElement.value = "";
+
+    
+
   }
   getInviteLink() {
     return this.window.location.href + "invite/?key=" + this.chatData.inviteLink;

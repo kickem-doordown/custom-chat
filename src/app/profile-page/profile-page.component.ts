@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '../core/auth.service';
+import { ChatdbService } from '../chatdb.service';
 
 @Component({
   selector: 'app-profile-page',
@@ -14,7 +15,7 @@ export class ProfilePageComponent implements OnInit {
   displayName: ElementRef;
 
 
-  constructor(public auth: AuthService) {
+  constructor(public auth: AuthService, public chatdb: ChatdbService) {
    }
   
   ngOnInit() {
@@ -34,7 +35,9 @@ export class ProfilePageComponent implements OnInit {
     this.auth.userData.updateProfile(
       {photoURL: photoUrl,
       displayName: displayName}
-    )
+    );
+
+    this.chatdb.setDisplayName(this.auth.userData.uid, this.displayName.nativeElement.value);
   }
 
 }

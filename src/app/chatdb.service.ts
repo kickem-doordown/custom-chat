@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import * as firebase from 'firebase/app';
 import { first, take } from 'rxjs/operators';
 import { AuthService } from './core/auth.service';
-import { Observable, Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,9 @@ export class ChatdbService {
   private chatID: string = null;
   chatIDObservable: Subject<string>;
   private chatList: Observable<any>;
-  private sortedChatList: Array<{last_read: firebase.firestore.Timestamp}> = [];
+  private sortedChatList: Array<{ last_read: firebase.firestore.Timestamp }> = [];
+
+  public displayName: string;
 
   constructor(public db: AngularFirestore, public auth: AuthService) {
     this.chatIDObservable = new Subject();
@@ -23,6 +25,15 @@ export class ChatdbService {
       this.sortedChatList.sort((a, b) => b.last_read.seconds - a.last_read.seconds);
     });
 
+  }
+
+  getDisplayName(UID): any {
+    return this.db.collection('chats').doc(this.chatID).collection('userData').doc(UID).valueChanges();
+  }
+
+  setDisplayName(UID, displayName) {
+    if(this.chatID && this.chatID !== null)
+      this.db.collection('chats').doc(this.chatID).collection('userData').doc(UID).set({ 'displayName': displayName });
   }
 
   getChats() {
