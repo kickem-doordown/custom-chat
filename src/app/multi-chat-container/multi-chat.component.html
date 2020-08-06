@@ -46,8 +46,8 @@
             </span>
         </mat-toolbar>
 
-        
-        <app-chat class="chat-body" *ngIf="chatdb.chatID" [chatID]="chatdb.chatID" [chatName]="chatdb.chatName"></app-chat>
+
+        <app-chat class="chat-body" *ngIf="chatdb.chatID" [chatID]="chatdb.chatID" [chatName]="chatdb.displayName"></app-chat>
 
         <div *ngIf="!chatdb.chatID">
             NONE CHAT SELECT

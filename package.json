@@ -24,6 +24,8 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@angular/youtube-player": "^8.2.3",
+    "@google-cloud/firestore": "^4.2.0",
+    "@google-cloud/storage": "^5.1.2",
     "@types/angular-sanitize": "^1.7.0",
     "autolinker": "^3.14.1",
     "firebase": "^7.14.1",
