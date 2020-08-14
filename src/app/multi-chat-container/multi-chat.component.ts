@@ -20,8 +20,12 @@ export class MultiChatComponent implements AfterViewInit{
 
   isShown: boolean = false;
 
-  
-  constructor(public chatdb: ChatdbService ) { }
+  chatList = [];
+  constructor(public chatdb: ChatdbService ) { 
+    this.chatdb.getChats().subscribe((chats) => {
+      this.chatList = chats;
+    });
+  }
 
 
   ngAfterViewInit() {

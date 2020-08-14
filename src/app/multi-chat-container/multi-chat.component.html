@@ -46,8 +46,9 @@
             </span>
         </mat-toolbar>
 
-
-        <app-chat class="chat-body" *ngIf="chatdb.chatID" [chatID]="chatdb.chatID" [chatName]="chatdb.displayName"></app-chat>
+        <ng-container *ngFor="let chat of chatList">
+            <app-chat class="chat-body" *ngIf="chatdb.chatID === chat.id" [chatID]="chatdb.chatID" [chatName]="chatdb.displayName"></app-chat>
+        </ng-container>
 
         <div *ngIf="!chatdb.chatID">
             NONE CHAT SELECT
