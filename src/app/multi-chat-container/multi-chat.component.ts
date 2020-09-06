@@ -23,7 +23,9 @@ export class MultiChatComponent implements AfterViewInit{
   chatList = [];
   constructor(public chatdb: ChatdbService ) { 
     this.chatdb.getChats().subscribe((chats) => {
-      this.chatList = chats;
+      if (chats.length != this.chatList.length) {
+        this.chatList = chats;
+      }
     });
   }
 
