@@ -10,7 +10,7 @@
             <editable (update)="updateField('displayName')">
                 <ng-template viewMode>{{options.displayName}}</ng-template>
                 <ng-template editMode>
-                    <input [formControl]="getControl('displayName')">
+                    <input [formControl]="getControl('displayName')" editableOnEnter>
                 </ng-template>
             </editable>
         </td>
@@ -20,7 +20,7 @@
             <editable (update)="updateField('photoURL')">
                 <ng-template viewMode>{{options.photoURL}}</ng-template>
                 <ng-template editMode>
-                    <input [formControl]="getControl('photoURL')">
+                    <input [formControl]="getControl('photoURL')" editableOnEnter>
                 </ng-template>
             </editable>
         </td>
