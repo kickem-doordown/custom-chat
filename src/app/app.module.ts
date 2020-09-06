@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatInputModule } from '@angular/material'
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AuthService } from "./core/auth.service";
 import { environment } from '../environments/environment';
@@ -36,6 +36,10 @@ import { ChatOptionsComponent } from './chat-options/chat-options.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { inviteComponent } from './invite-link/invite.component';
 import { WINDOW_PROVIDERS } from './core/window-provider';
+import { EditModeDirective } from './core/editable/edit-mode.directive';
+import { ViewModeDirective } from './core/editable/view-mode.directive';
+import { EditableOnEnterDirective } from './core/editable/editable-on-enter.directive';
+import { EditableComponent } from './core/editable/editable.component';
 
 
 @NgModule({
@@ -50,7 +54,11 @@ import { WINDOW_PROVIDERS } from './core/window-provider';
     ChatListComponent,
     ChatOptionsComponent,
     CreateChatDialog,
-    inviteComponent
+    inviteComponent,
+    EditModeDirective,
+    ViewModeDirective,
+    EditableOnEnterDirective,
+    EditableComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +83,8 @@ import { WINDOW_PROVIDERS } from './core/window-provider';
     MatMenuModule,
     MatListModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },

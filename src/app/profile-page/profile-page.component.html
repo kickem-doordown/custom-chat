@@ -5,21 +5,26 @@
     </mat-card-header>
     <mat-divider [inset]="true"></mat-divider>
     <br>
-    <form class="edit-info" (ngSubmit)="updateInfo($event)">
-        <mat-form-field class="input-field" floatLabel="always">
-            <mat-label>Display Photo URL</mat-label>
-            <input type="url" matInput #displayURL [placeholder]="auth.userData.photoURL">
-            <mat-icon matSuffix>mode_edit</mat-icon>
-        </mat-form-field>
-        <br>
-        <mat-form-field class="input-field" floatLabel="always">
-            <mat-label>Display Name</mat-label>
-            <input type="text" matInput #displayName [placeholder]="auth.userData.displayName">
-            <mat-icon matSuffix>mode_edit</mat-icon>
-        </mat-form-field>
-        <br>
-        <button id="send" (click)="updateInfo($event)" mat-raised-button>Update Info</button>
-    </form>
+    <tr>
+        <td>
+            <editable (update)="updateField('displayName')">
+                <ng-template viewMode>{{options.displayName}}</ng-template>
+                <ng-template editMode>
+                    <input [formControl]="getControl('displayName')">
+                </ng-template>
+            </editable>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <editable (update)="updateField('photoURL')">
+                <ng-template viewMode>{{options.photoURL}}</ng-template>
+                <ng-template editMode>
+                    <input [formControl]="getControl('photoURL')">
+                </ng-template>
+            </editable>
+        </td>
+    </tr>
     <mat-divider [inset]="true"></mat-divider>
     <br>
     <button mat-raised-button (click)="auth.SignOut()">
