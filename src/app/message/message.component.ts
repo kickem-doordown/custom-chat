@@ -117,7 +117,7 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       this.nsfwVisible = this.nsfw;
     }
     this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
-    if (this.messageData.likeArr.length == 0) {
+    if (this.messageData.likeArr.length <= 1) {
       this.likeVisible = false;
     }
     this.updateHeart();
