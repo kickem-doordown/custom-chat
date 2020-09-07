@@ -31,6 +31,8 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
   nsfw: boolean = false;
   nsfwVisible: boolean = false;
 
+  likeVisible: boolean = false;
+
   loaded: boolean = false;
 
   imageVisible: boolean = false;
@@ -115,6 +117,9 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       this.nsfwVisible = this.nsfw;
     }
     this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
+    if (this.messageData.likeArr.length == 0) {
+      this.likeVisible = false;
+    }
     this.updateHeart();
   }
 

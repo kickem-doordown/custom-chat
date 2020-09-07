@@ -1,5 +1,5 @@
 <div *ngIf="messageData else loading">
-    <div class="container" [ngStyle]="messageStyle()">
+    <div class="container" [ngStyle]="messageStyle()" (click)="likeVisible = !likeVisible">
         <div class="message">
             <span class="name">
                 <img *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [src]="photoURL" onerror="this.src='assets/default_group_chat.png'">
@@ -10,7 +10,9 @@
               </button>
             </span>
             <span>
-                <div class="nsfw-blur" *ngIf="nsfwVisible" (click)="nsfwVisible = false"><span><mat-icon>warning</mat-icon></span></div>
+                <div class="nsfw-blur" *ngIf="nsfwVisible">
+                    <span><mat-icon  (click)="nsfwVisible = false; $event.stopPropagation();">warning</mat-icon></span>
+        </div>
         <br> <span [innerHtml]="messageText"> </span>
         <br>
         <div class="image-wrapper" *ngIf="imageUrl">
@@ -26,7 +28,7 @@
         <span *ngIf="messageData.timestamp != null" class="timestamp">{{messageData.timestamp.seconds*1000 | date:'medium'}} </span>
     </div>
     <div class="like-container" *ngIf="loaded">
-        <div (click)="likeMes()" #likeContainer>
+        <div (click)="likeMes(); $event.stopPropagation()" #likeContainer>
             <a *ngIf="messageData.likeArr" href="#">
                 <svg class="heart" viewBox="0 0 32 29.6" [ngStyle]="{'transform': heartScale}">
                     <path class="heart-drawing" [ngStyle]="{'animation': heartAnimation, 'fill': heartColor}"  d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2
@@ -42,7 +44,7 @@
     </div>
 </div>
 
-<div class="like-list" *ngIf="messageData.likeArr.length > 0">
+<div class="like-list" *ngIf="messageData.likeArr.length > 0 && likeVisible">
     <span class="like-element" *ngFor="let u of messageData.likeArr">
             {{u}}
         </span>
