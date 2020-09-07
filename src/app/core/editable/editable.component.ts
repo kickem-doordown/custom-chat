@@ -42,7 +42,7 @@ export class EditableComponent {
   }
 
   private viewModeHandler() {
-    fromEvent(this.element, 'dblclick').pipe(
+    fromEvent(this.element, 'click').pipe(
       untilDestroyed(this)
     ).subscribe(() => { 
       this.mode = 'edit';

@@ -71,7 +71,6 @@ export class ProfilePageComponent implements OnInit {
   sendUpdate(data) {
     // TODO need to separate these/ create a way to update display name for general profile,
     // and another for just current chat nickname.
-    console.log(data);
     this.auth.userData.updateProfile(
       data
     );
