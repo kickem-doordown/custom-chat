@@ -5,26 +5,29 @@
     </mat-card-header>
     <mat-divider [inset]="true"></mat-divider>
     <br>
-    <tr>
-        <td>
+    <mat-card>
+        <mat-card-title>Name</mat-card-title>
+        <mat-card-content>
             <editable (update)="updateField('displayName')">
                 <ng-template viewMode>{{options.displayName}}</ng-template>
                 <ng-template editMode>
                     <input [formControl]="getControl('displayName')" editableOnEnter>
                 </ng-template>
             </editable>
-        </td>
-    </tr>
-    <tr>
-        <td>
+        </mat-card-content>
+        <mat-divider [inset]="true"></mat-divider>
+        <br>
+        <mat-card-title>Photo URL</mat-card-title>
+        <mat-card-content>
             <editable (update)="updateField('photoURL')">
                 <ng-template viewMode>{{options.photoURL}}</ng-template>
                 <ng-template editMode>
                     <input [formControl]="getControl('photoURL')" editableOnEnter>
                 </ng-template>
             </editable>
-        </td>
-    </tr>
+        </mat-card-content>
+    </mat-card>
+
     <mat-divider [inset]="true"></mat-divider>
     <br>
     <button mat-raised-button (click)="auth.SignOut()">
