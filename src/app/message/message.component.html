@@ -3,7 +3,7 @@
         <div class="message">
             <span class="name">
                 <img *ngIf="photoURL && photoURL!=''" mat-card-avatar class="profile-picture" [src]="photoURL" onerror="this.src='assets/default_group_chat.png'">
-                <span style="max-width:80%; word-wrap:break-word; word-break: break-all;">{{messageData.displayName}}: </span>
+                <span style="max-width:80%; word-wrap:break-word; word-break: break-all; z-index:inherit">{{messageData.displayName}}: </span>
             <span style="flex: 1 1 auto"></span>
             <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="nsfw" (click)="$event.stopPropagation()">
                 <mat-icon>more_vert</mat-icon>

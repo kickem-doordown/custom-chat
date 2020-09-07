@@ -13,6 +13,7 @@
     max-height: 3em;
     max-width: 3em;
     margin-right: 5px;
+    z-index: inherit;
 }
 
 .message {
@@ -29,6 +30,7 @@
     justify-content: flex-start;
     width: 100%;
     min-width: 0;
+    z-index: 100;
 }
 
 .timestamp {
