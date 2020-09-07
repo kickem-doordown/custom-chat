@@ -60,8 +60,8 @@
 </ng-template>
 
 <!--Message Option Menu-->
-<mat-menu #menu="matMenu">
-    <button *ngIf="nsfw" mat-menu-item (click)="nsfwVisible = true; $event.stopPropagation()">
+<mat-menu #menu="matMenu" (click)=" $event.stopPropagation()">
+    <button *ngIf="nsfw" mat-menu-item (click)="nsfwVisible = true">
         <mat-icon>warning</mat-icon>
         <span>Re-NSFW</span>
     </button>
