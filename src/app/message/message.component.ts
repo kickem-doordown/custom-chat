@@ -68,9 +68,9 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
       this.messageInit();
     } else {
       this.messageSub = this.mesService.getMessageData(this.chatID, this.messageDoc.id).subscribe(data => {
-        this.loaded = true;
         this.messageData = data;
         this.messageInit();
+        this.loaded = true;
       });
     }
   }
@@ -111,7 +111,9 @@ export class MessageComponent implements OnInit, OnDestroy, OnChanges {
     this.messageText = lines.join("<br>");
 
     this.nsfw = this.messageData.nsfw == null ? false : this.messageData.nsfw;
-    this.nsfwVisible = this.nsfw;
+    if (!this.loaded) {
+      this.nsfwVisible = this.nsfw;
+    }
     this.photoURL = this.messageData.photoURL == null ? "" : this.messageData.photoURL;
     this.updateHeart();
   }
