@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AuthService } from "./core/auth.service";
 import { environment } from '../environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MessageComponent } from './message/message.component';
@@ -40,6 +40,8 @@ import { EditModeDirective } from './core/editable/edit-mode.directive';
 import { ViewModeDirective } from './core/editable/view-mode.directive';
 import { EditableOnEnterDirective } from './core/editable/editable-on-enter.directive';
 import { EditableComponent } from './core/editable/editable.component';
+import { MessagingService } from './core/notifications/messaging.service';
+import { AngularFireMessaging } from '@angular/fire/messaging';
 
 
 @NgModule({
@@ -88,7 +90,7 @@ import { EditableComponent } from './core/editable/editable.component';
   ],
   providers: [AuthService,
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    WINDOW_PROVIDERS],
+    WINDOW_PROVIDERS, MessagingService, AngularFireMessaging],
   entryComponents: [AppComponent, CreateChatDialog]
   // bootstrap: [AppComponent]
 })
